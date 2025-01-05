@@ -1,7 +1,7 @@
 import { defineChain } from "viem";
 
 export const EduStreamrFactoryAddress =
-  "0x9aDa1356126969D051db05A90d9fE3a08919BB1C";
+  "0xe173B196D102B68FF5c13F7FD2A6ee133D17e7a3";
 
 export const educhainTestnet = defineChain({
   id: 656476,
