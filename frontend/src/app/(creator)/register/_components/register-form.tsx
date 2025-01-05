@@ -4,7 +4,6 @@ import { EduStreamrFactoryAbi } from "@/abi/EduStreamrFactory";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { EduStreamrFactoryAddress } from "@/constants";
-import { redirect } from "next/navigation";
 import { useState } from "react";
 import { useAccount, useReadContract, useWriteContract } from "wagmi";
 import toast from "react-hot-toast";
