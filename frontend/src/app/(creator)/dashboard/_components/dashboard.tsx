@@ -12,8 +12,6 @@ import History from "./history";
 import {
   useAccount,
   useBalance,
-  useWaitForTransactionReceipt,
-  useWatchContractEvent,
   useWriteContract,
 } from "wagmi";
 import CopyButton from "@/components/ui/copy-button";
@@ -28,17 +26,15 @@ import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { ArrowUpFromLine, Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { config } from "@/wagmi";
+import { waitForTransactionReceipt } from "@wagmi/core";
 
 export default function Dashboard({ baseUrl }: { baseUrl: string }) {
   const accountResult = useAccount();
 
   const creatorInfoResult = useGetCreatorInfoByAddress(accountResult.address!);
 
-  const { writeContract, data: hash } = useWriteContract();
-
-  const { isSuccess: isConfirmed } = useWaitForTransactionReceipt({
-    hash,
-  });
+  const { writeContract } = useWriteContract();
 
   const statsResult = useGetCreatorStats(
     creatorInfoResult.status === "success"
@@ -50,19 +46,6 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
 
   const router = useRouter();
 
-  useWatchContractEvent({
-    abi: EduStreamrAbi,
-    address:
-      creatorInfoResult.status === "success"
-        ? creatorInfoResult.contractAddress
-        : "0x0",
-    eventName: "Withdraw",
-    onLogs: () => {
-      setIsLoading(false);
-    },
-    enabled: creatorInfoResult.status === "success",
-  });
-
   const balanceResult = useBalance({
     address:
       creatorInfoResult.status === "success"
@@ -70,14 +53,6 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
         : undefined,
     query: { enabled: creatorInfoResult.status === "success" },
   });
-
-  useEffect(() => {
-    if (isConfirmed) {
-      balanceResult.refetch().then(() => {
-        toast.success("Withdraw successful.");
-      });
-    }
-  }, [isConfirmed]);
 
   if (creatorInfoResult.status === "error") {
     router.push("/register");
@@ -96,6 +71,8 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
   const fullUrl = `${baseUrl}/tip/${username}`;
 
   const handleWithdraw = () => {
+    setIsLoading(true);
+
     writeContract(
       {
         abi: EduStreamrAbi,
@@ -103,11 +80,17 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
         functionName: "withdraw",
       },
       {
-        onSuccess: () => {
-          setIsLoading(true);
+        onSuccess: async (data) => {
+          await waitForTransactionReceipt(config, { hash: data });
+          setIsLoading(false);
+
+          await balanceResult.refetch();
+
+          toast.success("Withdraw successful.");
         },
         onError: (error) => {
           toast.error(error.message);
+          setIsLoading(false);
         },
       }
     );
