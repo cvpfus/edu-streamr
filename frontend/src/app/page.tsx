@@ -18,24 +18,31 @@ const words = [
   },
   {
     text: "EduStreamr",
+    className: "text-cyan-600",
   },
 ];
 
 export default function Page() {
   return (
     <div className="min-h-screen flex flex-col">
+      <div className="bg-cyan-600 text-white text-center py-1 flex items-center justify-center gap-2">
+        <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+        <span>Live on EduChain Testnet</span>
+      </div>
       <header className="flex justify-between items-center p-4 border-b">
         <img src="/logo.png" alt="EduStreamr" className="w-24" />
         <div className="flex gap-4">
           <Link
             href="https://github.com/cvpfus/edu-streamr"
             className="hover:opacity-80"
+            target="_blank"
           >
             <SiGithub className="w-6 h-6 text-cyan-600" />
           </Link>
           <Link
             href="https://x.com/EduStreamr"
             className="hover:opacity-80"
+            target="_blank"
           >
             <SiX className="w-6 h-6 text-cyan-600" />
           </Link>
