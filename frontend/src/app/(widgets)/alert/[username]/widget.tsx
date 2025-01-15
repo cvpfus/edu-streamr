@@ -5,6 +5,7 @@ import { useGetCreatorInfoByUsername } from "@/hooks/edu-streamr";
 import { useEffect, useState } from "react";
 import { formatEther } from "viem";
 import { useWatchContractEvent } from "wagmi";
+import useSound from "use-sound";
 
 interface Message {
   senderAddress?: `0x${string}`;
@@ -37,9 +38,13 @@ export default function Widget({ username }: { username: string }) {
     enabled: result.status === "success",
   });
 
+  const [play] = useSound("/kaching.mp3");
+
   useEffect(() => {
     if (currentMessage === null && messageQueue.length > 0) {
       setCurrentMessage(messageQueue[0]);
+
+      play({ forceSoundEnabled: true });
 
       setTimeout(() => {
         setCurrentMessage(null);
