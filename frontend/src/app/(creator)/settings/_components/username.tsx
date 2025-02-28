@@ -22,7 +22,7 @@ import { UseGetCreatorInfoReturnType } from "@/hooks/edu-streamr/types";
 export default function Username({
   currentUsername,
 }: {
-  currentUsername?: string;
+  currentUsername: string;
 }) {
   const [username, setUsername] = useState(currentUsername);
   const [isLoading, setIsLoading] = useState(false);

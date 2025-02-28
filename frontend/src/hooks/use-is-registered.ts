@@ -7,7 +7,7 @@ export const useIsRegistered = (address: string | undefined) => {
     abi: UniversalEduStreamrAbi,
     address: UniversalEduStreamrAddress,
     functionName: "isRegistered",
-    args: [address],
+    args: [address!],
     query: { enabled: !!address },
   });
 };
