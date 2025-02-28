@@ -3,12 +3,15 @@
 import { EduStreamrAbi } from "@/abi/EduStreamr";
 import { useGetCreatorInfoByUsername } from "@/hooks/edu-streamr";
 import { useEffect, useState } from "react";
-import { formatEther } from "viem";
+import { formatEther, isAddress } from "viem";
 import { useWatchContractEvent } from "wagmi";
 import useSound from "use-sound";
+import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
+import { UniversalEduStreamrAddress } from "@/constants";
+import { useGetDuration } from "@/hooks/use-get-duration";
 
 interface Message {
-  senderAddress?: `0x${string}`;
+  senderAddress?: string;
   senderName?: string;
   message?: string;
   amount?: bigint;
@@ -20,9 +23,35 @@ export default function Widget({ username }: { username: string }) {
   const [messageQueue, setMessageQueue] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
 
+  const durationResult = useGetDuration({
+    contractAddress:
+      result.status === "success" ? result.contractAddress : undefined,
+  });
+
+  useWatchContractEvent({
+    abi: UniversalEduStreamrAbi,
+    address: UniversalEduStreamrAddress,
+    eventName: "TipReceived",
+    args: {
+      recipientAddress: isAddress(username) ? username : "0x0",
+    },
+    onError: (error) => {
+      console.error(error);
+    },
+    onLogs: (logs) => {
+      const { senderAddress, senderName, message, amount } = logs[0].args;
+
+      setMessageQueue((prevQueue) => [
+        ...prevQueue,
+        { senderAddress, senderName, message, amount },
+      ]);
+    },
+    enabled: isAddress(username),
+  });
+
   useWatchContractEvent({
     abi: EduStreamrAbi,
-    address: result.status === "success" ? result.contractAddress : "0x0",
+    address: result.status === "success" ? result.contractAddress : undefined,
     eventName: "TipReceived",
     onError: (error) => {
       console.error(error);
@@ -40,6 +69,9 @@ export default function Widget({ username }: { username: string }) {
 
   const [play] = useSound("/kaching.mp3");
 
+  const duration =
+    durationResult.status === "success" ? durationResult.duration : 5;
+
   useEffect(() => {
     if (currentMessage === null && messageQueue.length > 0) {
       setCurrentMessage(messageQueue[0]);
@@ -49,11 +81,11 @@ export default function Widget({ username }: { username: string }) {
       setTimeout(() => {
         setCurrentMessage(null);
         setMessageQueue((prevQueue) => prevQueue.slice(1));
-      }, 5000);
+      }, duration * 1000);
     }
   }, [currentMessage, messageQueue]);
 
-  if (result.status === "error") {
+  if (result.status === "error" && !isAddress(username)) {
     return <div>Error fetching username. Please refresh.</div>;
   }
 

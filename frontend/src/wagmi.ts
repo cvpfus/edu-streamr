@@ -1,36 +1,24 @@
-import { cookieStorage, createStorage, type Config, webSocket } from "wagmi";
-import { WagmiAdapter } from "@reown/appkit-adapter-wagmi";
+import { createConfig, webSocket } from "wagmi";
+import { inAppWalletConnector } from "@thirdweb-dev/wagmi-adapter";
 import { educhainTestnet } from "./constants";
-
-export const projectId = "91b69d7bece4701b9c9798b72e546b0a";
+import { client } from "./client";
 
 export const networks = [educhainTestnet];
 
-export const metadata = {
-  name: "EduStreamr",
-  description: "AppKit Example",
-  url: "https://reown.com/appkit", // origin must match your domain & subdomain
-  icons: ["https://assets.reown.com/reown-profile-pic.png"],
-};
-
-export const wagmiAdapter = new WagmiAdapter({
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
-  ssr: true,
-  projectId,
-  networks,
+export const config = createConfig({
+  chains: [educhainTestnet],
+  connectors: [inAppWalletConnector({ client })],
   transports: {
     [educhainTestnet.id]: webSocket(
-      "wss://ws.open-campus-codex.gelato.digital"
+      "wss://ws.open-campus-codex.gelato.digital",
     ),
   },
 });
 
-export const config = wagmiAdapter.wagmiConfig;
+config.storage?.setItem("tw.lastChainId", educhainTestnet.id);
 
 declare module "wagmi" {
   interface Register {
-    config: Config;
+    config: typeof config;
   }
 }

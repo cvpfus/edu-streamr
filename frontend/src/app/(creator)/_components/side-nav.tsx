@@ -3,15 +3,15 @@
 import Image from "next/image";
 import SideNavItems from "./side-nav-items";
 import { useAccount, useReadContract } from "wagmi";
-import { EduStreamrFactoryAbi } from "@/abi/EduStreamrFactory";
-import { EduStreamrFactoryAddress } from "@/constants";
+import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
+import { UniversalEduStreamrAddress } from "@/constants";
 
 export default function SideNav() {
   const { isConnected, address } = useAccount();
 
   const result = useReadContract({
-    abi: EduStreamrFactoryAbi,
-    address: EduStreamrFactoryAddress,
+    abi: UniversalEduStreamrAbi,
+    address: UniversalEduStreamrAddress,
     functionName: "creatorInfoByAddress",
     args: [address ?? "0x0"],
   });

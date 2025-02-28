@@ -1,4 +1,4 @@
-import ConnectButton from "@/components/ui/connect-button";
+import { ConnectButton } from "@/components/ui/connect-button";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

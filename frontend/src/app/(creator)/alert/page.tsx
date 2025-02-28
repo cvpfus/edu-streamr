@@ -1,17 +1,17 @@
 import { Metadata } from "next";
 import { headers } from "next/headers";
-import Dashboard from "./dashboard";
+import Alert from "./alert";
 
 export const metadata: Metadata = {
-  title: "Dashboard",
-};
+  title: "Alert"
+}
 
-export default async function DashboardPage() {
+export default async function AlertPage() {
   const head = await headers();
   const host = head.get("host");
 
   const protocol = host?.includes("localhost") ? "http" : "https";
   const baseUrl = `${protocol}://${host}`;
-
-  return <Dashboard baseUrl={baseUrl} />;
+  
+  return <Alert baseUrl={baseUrl} />
 }

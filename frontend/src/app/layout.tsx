@@ -8,7 +8,7 @@ import { config as wagmiConfig } from "@/wagmi";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
 
-const inter = Inter({ subsets: ["latin"] });
+const font = Inter({ subsets: ["latin"], style: ["normal", "italic"] });
 
 export const metadata: Metadata = {
   title: "EduStreamr",
@@ -21,8 +21,8 @@ export default async function RootLayout(props: { children: ReactNode }) {
   );
   return (
     <html lang="en">
-      <body className={inter.className}>
-        <Toaster position="bottom-right" />
+      <body className={`${font.className} antialiased`}>
+        <Toaster position="top-right" />
         <Providers initialState={initialState}>{props.children}</Providers>
       </body>
     </html>

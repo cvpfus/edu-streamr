@@ -1,13 +1,23 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Settings } from "lucide-react";
+import { BellRing, LayoutDashboard, ScrollText, Settings } from "lucide-react";
 
 const NavItems = [
   {
     href: "/dashboard",
     label: "Dashboard",
     icon: <LayoutDashboard className="size-4" />,
+  },
+  {
+    href: "/history",
+    label: "Tip History",
+    icon: <ScrollText className="size-4" />,
+  },
+  {
+    href: "/alert",
+    label: "Alert",
+    icon: <BellRing className="size-4" />,
   },
   {
     href: "/settings",

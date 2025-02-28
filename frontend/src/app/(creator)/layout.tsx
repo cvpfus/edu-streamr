@@ -1,5 +1,5 @@
+import { ConnectButton } from "@/components/ui/connect-button";
 import SideNav from "./_components/side-nav";
-import ConnectButton from "@/components/ui/connect-button";
 import Connect from "./connect";
 
 export default async function Layout({

@@ -1,54 +1,6 @@
-export const EduStreamrAbi = [
+export const UniversalEduStreamrAbi = [
   {
-    inputs: [
-      {
-        internalType: "address",
-        name: "_factoryAddress",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "_totalTipsReceived",
-        type: "uint256",
-      },
-      {
-        components: [
-          {
-            internalType: "address",
-            name: "recipientAddress",
-            type: "address",
-          },
-          {
-            internalType: "address",
-            name: "senderAddress",
-            type: "address",
-          },
-          {
-            internalType: "string",
-            name: "senderName",
-            type: "string",
-          },
-          {
-            internalType: "string",
-            name: "message",
-            type: "string",
-          },
-          {
-            internalType: "uint256",
-            name: "amount",
-            type: "uint256",
-          },
-          {
-            internalType: "uint256",
-            name: "timestamp",
-            type: "uint256",
-          },
-        ],
-        internalType: "struct IEduStreamr.Tip[]",
-        name: "_tips",
-        type: "tuple[]",
-      },
-    ],
+    inputs: [],
     stateMutability: "nonpayable",
     type: "constructor",
   },
@@ -73,6 +25,25 @@ export const EduStreamrAbi = [
     ],
     name: "OwnableUnauthorizedAccount",
     type: "error",
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "creatorAddress",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "creatorContractAddress",
+        type: "address",
+      },
+    ],
+    name: "ContractDeployed",
+    type: "event",
   },
   {
     anonymous: false,
@@ -156,8 +127,14 @@ export const EduStreamrAbi = [
     type: "event",
   },
   {
-    inputs: [],
-    name: "bio",
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "addressToUsername",
     outputs: [
       {
         internalType: "string",
@@ -172,23 +149,123 @@ export const EduStreamrAbi = [
     inputs: [
       {
         internalType: "string",
-        name: "",
+        name: "newName",
         type: "string",
       },
     ],
-    name: "colors",
+    name: "changeName",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "newUsername",
+        type: "string",
+      },
+    ],
+    name: "changeUsername",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "creatorInfoByAddress",
     outputs: [
       {
         internalType: "string",
-        name: "",
+        name: "username",
         type: "string",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "creatorAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "contractAddress",
+        type: "address",
       },
     ],
     stateMutability: "view",
     type: "function",
   },
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    name: "creatorInfoByUsername",
+    outputs: [
+      {
+        internalType: "string",
+        name: "username",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "name",
+        type: "string",
+      },
+      {
+        internalType: "address",
+        name: "creatorAddress",
+        type: "address",
+      },
+      {
+        internalType: "address",
+        name: "contractAddress",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "username",
+        type: "string",
+      },
+    ],
+    name: "deployContract",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "creatorAddress",
+        type: "address",
+      },
+    ],
     name: "getTipCount",
     outputs: [
       {
@@ -202,6 +279,11 @@ export const EduStreamrAbi = [
   },
   {
     inputs: [
+      {
+        internalType: "address",
+        name: "creatorAddress",
+        type: "address",
+      },
       {
         internalType: "uint256",
         name: "startRow",
@@ -262,13 +344,19 @@ export const EduStreamrAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "messageDuration",
+    inputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    name: "isRegistered",
     outputs: [
       {
-        internalType: "uint8",
+        internalType: "bool",
         name: "",
-        type: "uint8",
+        type: "bool",
       },
     ],
     stateMutability: "view",
@@ -297,6 +385,11 @@ export const EduStreamrAbi = [
   {
     inputs: [
       {
+        internalType: "address",
+        name: "creatorAddress",
+        type: "address",
+      },
+      {
         internalType: "string",
         name: "senderName",
         type: "string",
@@ -315,49 +408,11 @@ export const EduStreamrAbi = [
   {
     inputs: [
       {
-        internalType: "string",
-        name: "newBio",
-        type: "string",
+        internalType: "address",
+        name: "",
+        type: "address",
       },
     ],
-    name: "setBio",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "string",
-        name: "colorType",
-        type: "string",
-      },
-      {
-        internalType: "string",
-        name: "colorHex",
-        type: "string",
-      },
-    ],
-    name: "setColor",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "uint8",
-        name: "_seconds",
-        type: "uint8",
-      },
-    ],
-    name: "setMessageDuration",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [],
     name: "totalTipsReceived",
     outputs: [
       {
@@ -383,10 +438,22 @@ export const EduStreamrAbi = [
     type: "function",
   },
   {
-    inputs: [],
-    name: "withdraw",
-    outputs: [],
-    stateMutability: "nonpayable",
+    inputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    name: "usernameToAddress",
+    outputs: [
+      {
+        internalType: "address",
+        name: "",
+        type: "address",
+      },
+    ],
+    stateMutability: "view",
     type: "function",
   },
 ] as const;

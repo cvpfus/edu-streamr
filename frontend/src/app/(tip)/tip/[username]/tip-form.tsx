@@ -1,5 +1,3 @@
-"use client";
-
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -25,13 +23,17 @@ import { Switch } from "@/components/ui/switch";
 import { EduStreamrAbi } from "@/abi/EduStreamr";
 import { parseEther } from "viem";
 import { useEffect } from "react";
+import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
+import { UniversalEduStreamrAddress } from "@/constants";
 
 export default function TipForm({
   creatorAddress,
   contractAddress,
+  isToAddress,
 }: {
-  creatorAddress: `0x${string}`;
-  contractAddress: `0x${string}`;
+  creatorAddress: string | undefined;
+  contractAddress: string | undefined;
+  isToAddress: boolean;
 }) {
   const form = useForm<TipFormData>({
     resolver: zodResolver(formSchema),
@@ -59,6 +61,31 @@ export default function TipForm({
     try {
       if (!creatorAddress) {
         toast.error("Send tip failed. Recipient address not found.");
+        return;
+      }
+
+      if (isToAddress) {
+        writeContract(
+          {
+            abi: UniversalEduStreamrAbi,
+            address: UniversalEduStreamrAddress,
+            functionName: "sendTip",
+            args: [
+              creatorAddress,
+              formData.anonymous ? "Anonymous" : formData.name,
+              formData.message,
+            ],
+            value: parseEther(formData.amount.toString()),
+          },
+          {
+            onError: (err) => {
+              toast.error(
+                (err as BaseError).shortMessage || "Send tip failed."
+              );
+            },
+          }
+        );
+
         return;
       }
 
