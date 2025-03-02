@@ -189,6 +189,29 @@ export const EduStreamrAbi = [
   },
   {
     inputs: [],
+    name: "getColors",
+    outputs: [
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "",
+        type: "string",
+      },
+    ],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
+    inputs: [],
     name: "getTipCount",
     outputs: [
       {
@@ -339,6 +362,29 @@ export const EduStreamrAbi = [
       },
     ],
     name: "setColor",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "string",
+        name: "primary",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "secondary",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "background",
+        type: "string",
+      },
+    ],
+    name: "setColors",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
