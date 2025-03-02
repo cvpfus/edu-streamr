@@ -8,13 +8,15 @@ import { useWatchContractEvent } from "wagmi";
 import useSound from "use-sound";
 import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
 import { UniversalEduStreamrAddress } from "@/constants";
+import { useGetColors } from "@/hooks/use-get-colors";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetDuration } from "@/hooks/use-get-duration";
 
 interface Message {
-  senderAddress?: string;
-  senderName?: string;
-  message?: string;
-  amount?: bigint;
+  senderAddress: string;
+  senderName: string;
+  message: string;
+  amount: bigint;
 }
 
 export default function Widget({ username }: { username: string }) {
@@ -22,6 +24,11 @@ export default function Widget({ username }: { username: string }) {
 
   const [messageQueue, setMessageQueue] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState<Message | null>(null);
+
+  const colorsResult = useGetColors({
+    contractAddress:
+      result.status === "success" ? result.contractAddress : undefined,
+  });
 
   const durationResult = useGetDuration({
     contractAddress:
@@ -41,17 +48,18 @@ export default function Widget({ username }: { username: string }) {
     onLogs: (logs) => {
       const { senderAddress, senderName, message, amount } = logs[0].args;
 
-      setMessageQueue((prevQueue) => [
-        ...prevQueue,
-        { senderAddress, senderName, message, amount },
-      ]);
+      if (senderAddress && senderName && message && amount)
+        setMessageQueue((prevQueue) => [
+          ...prevQueue,
+          { senderAddress, senderName, message, amount },
+        ]);
     },
     enabled: isAddress(username),
   });
 
   useWatchContractEvent({
     abi: EduStreamrAbi,
-    address: result.status === "success" ? result.contractAddress : undefined,
+    address: result.status === "success" ? result.contractAddress : "0x0",
     eventName: "TipReceived",
     onError: (error) => {
       console.error(error);
@@ -59,10 +67,11 @@ export default function Widget({ username }: { username: string }) {
     onLogs: (logs) => {
       const { senderAddress, senderName, message, amount } = logs[0].args;
 
-      setMessageQueue((prevQueue) => [
-        ...prevQueue,
-        { senderAddress, senderName, message, amount },
-      ]);
+      if (senderAddress && senderName && message && amount)
+        setMessageQueue((prevQueue) => [
+          ...prevQueue,
+          { senderAddress, senderName, message, amount },
+        ]);
     },
     enabled: result.status === "success",
   });
@@ -85,30 +94,60 @@ export default function Widget({ username }: { username: string }) {
     }
   }, [currentMessage, messageQueue]);
 
+  const colors =
+    colorsResult.status === "success"
+      ? colorsResult.colors
+      : {
+          primary: "#000000",
+          secondary: "#000000",
+          background: "#ffffff",
+        };
+
   if (result.status === "error" && !isAddress(username)) {
-    return <div>Error fetching username. Please refresh.</div>;
+    return (
+      <Card className="w-full text-center bg-destructive text-white">
+        <CardHeader>
+          <CardTitle>Error</CardTitle>
+        </CardHeader>
+        <CardContent>
+          Error fetching username. Please refresh your OBS Browser Source.
+        </CardContent>
+      </Card>
+    );
   }
 
   if (result.status === "pending") {
-    return <div>Loading...</div>;
+    return (
+      <Card className="w-full text-center">
+        <CardHeader>
+          <CardTitle>Loading</CardTitle>
+        </CardHeader>
+        <CardContent className="">Please wait</CardContent>
+      </Card>
+    );
   }
 
+  if (!currentMessage) return null;
+
   return (
-    <div className="flex flex-col items-center justify-center h-screen w-full">
-      {currentMessage && (
-        <div className="text-center bg-black/80 p-8 rounded-lg shadow-xl animate-fade-in w-full">
-          <div className="text-3xl font-bold text-white mb-4 animate-slide-down">
-            {currentMessage.senderName}
-          </div>
-          <div className="text-xl text-gray-200 mb-4 animate-slide-up animate-fade-in">
-            {currentMessage.message}
-          </div>
-          <div className="text-2xl font-semibold text-green-400 animate-pulse">
-            {currentMessage.amount ? formatEther(currentMessage.amount) : "0"}{" "}
-            EDU
-          </div>
-        </div>
-      )}
-    </div>
+    <Card
+      className="w-full text-center"
+      style={{ backgroundColor: colors.background }}
+    >
+      <CardHeader>
+        <CardTitle className="font-normal">
+          <span className="font-medium" style={{ color: colors.secondary }}>
+            {currentMessage.senderName}{" "}
+          </span>
+          <span style={{ color: colors.primary }}>tipped </span>
+          <span className="font-medium" style={{ color: colors.secondary }}>
+            {formatEther(currentMessage.amount)} EDU
+          </span>
+        </CardTitle>
+      </CardHeader>
+      <CardContent style={{ color: colors.primary }}>
+        {currentMessage.message}
+      </CardContent>
+    </Card>
   );
 }
