@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useGetCreatorInfoByUsername } from "@/hooks/edu-streamr";
 import TipForm from "./tip-form";
@@ -21,6 +21,8 @@ export const TipPage = ({ username }: { username: string }) => {
       ? {
           contractAddress: creatorInfoByUsernameResult.contractAddress,
           creatorAddress: creatorInfoByUsernameResult.creatorAddress,
+          username: creatorInfoByUsernameResult.username,
+          name: creatorInfoByUsernameResult.name,
         }
       : undefined;
 
@@ -43,10 +45,15 @@ export const TipPage = ({ username }: { username: string }) => {
         height={64}
         className="size-16 rounded-full"
       />
-      <div className="text-center">Tip to {username}</div>
+      <div>
+        <div className="text-center">{creatorInfo?.name}</div>
+        <div className="text-center text-sm text-gray-500">@{username}</div>
+      </div>
       <div className="text-sm text-gray-500 mb-1">{bio}</div>
       <TipForm
-        creatorAddress={isAddress(username) ? username : creatorInfo?.creatorAddress}
+        creatorAddress={
+          isAddress(username) ? username : creatorInfo?.creatorAddress
+        }
         contractAddress={creatorInfo?.contractAddress}
         isToAddress={isAddress(username)}
       />
