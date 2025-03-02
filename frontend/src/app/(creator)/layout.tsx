@@ -14,7 +14,7 @@ export default async function Layout({
         <div className="flex justify-end mt-4 ">
           <ConnectButton />
         </div>
-        <div className="h-screen w-full mt-4 max-h-screen">
+        <div className="h-dvh w-full mt-4 max-h-dvh">
           <Connect>{children}</Connect>
         </div>
       </div>
