@@ -17,14 +17,11 @@ import { waitForTransactionReceipt } from "@wagmi/core";
 import { config } from "@/wagmi";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
+import { Loader2, Save } from "lucide-react";
 
-export default function Name({
-  currentName,
-}: {
-  currentName?: string;
-}) {
-    console.log("Name 2", currentName)
-  
+export default function Name({ currentName }: { currentName?: string }) {
+  console.log("Name 2", currentName);
+
   const [name, setName] = useState(currentName ?? "");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -72,12 +69,12 @@ export default function Name({
         <CardTitle>Update name</CardTitle>
         <CardDescription>
           <div>
-            Update your current name. This action requires a small
-            transaction fee (~0.0001 EDU).
+            Update your current name. This action requires a small transaction
+            fee (~0.0001 EDU).
           </div>
           <div>
-            Name must be between 3 and 35 characters long. Name can only
-            contain letters and spaces.
+            Name must be between 3 and 35 characters long. Name can only contain
+            letters and spaces.
           </div>
         </CardDescription>
       </CardHeader>
@@ -93,8 +90,13 @@ export default function Name({
             onChange={(e) => setName(e.target.value)}
             value={name}
           />
-          <Button type="submit" className="self-start" disabled={isLoading}>
-            Update
+          <Button
+            type="submit"
+            className="self-start flex items-center gap-2"
+            disabled={isLoading}
+          >
+            {isLoading ? <Loader2 className="animate-spin" /> : <Save />}
+            <span>Save</span>
           </Button>
         </form>
       </CardContent>

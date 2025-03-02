@@ -6,7 +6,7 @@ import { useAccount, useWriteContract } from "wagmi";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import { config } from "@/wagmi";
 import toast from "react-hot-toast";
-import { Loader2, Pencil } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -70,7 +70,7 @@ export default function Bio({
           toast.success("Bio set");
           setIsLoading(false);
         },
-      },
+      }
     );
   };
 
@@ -79,7 +79,7 @@ export default function Bio({
       <CardHeader>
         <CardTitle>Set bio</CardTitle>
         <CardDescription>
-          Set your bio to be displayed on the tip page.
+          Set your bio to be displayed on the tip page. This action requires a small transaction fee (~0.0001 EDU).
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -96,9 +96,8 @@ export default function Bio({
               onClick={handleSetBio}
               className="flex items-center gap-2"
             >
-              {isLoading && <Loader2 className="animate-spin" />}
-              <Pencil />
-              <span>Set</span>
+              {isLoading ? <Loader2 className="animate-spin" /> : <Save />}
+              <span>Save</span>
             </Button>
             <p className="text-xs text-gray-500">{value.length} / 130</p>
           </div>

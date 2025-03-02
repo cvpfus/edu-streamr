@@ -25,8 +25,6 @@ export const Settings = () => {
   const name =
     creatorInfoResult.status === "success" ? creatorInfoResult.name : undefined;
 
-  console.log("Name 1", name);
-
   return (
     <div className="flex flex-col gap-4 mt-4">
       <div className="font-bold block sm:hidden">Settings</div>

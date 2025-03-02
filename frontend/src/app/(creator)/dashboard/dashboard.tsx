@@ -139,7 +139,7 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
           <CardHeader>
             <CardTitle>Pending Tips</CardTitle>
           </CardHeader>
-          <CardContent className="flex justify-between items-center">
+          <CardContent className="flex justify-between items-center gap-4">
             <div>
               {contractBalanceResult.status === "success" &&
                 `${formatEther(contractBalanceResult.data.value)} ${
@@ -167,8 +167,12 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
                 isLoading
               }
             >
-              {isLoading && <Loader2 className="size-2 animate-spin" />}
-              <ArrowUpFromLine />
+              {isLoading ? (
+                <Loader2 className="size-2 animate-spin" />
+              ) : (
+                <ArrowUpFromLine />
+              )}
+
               <span>Withdraw</span>
             </Button>
           </CardContent>

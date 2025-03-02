@@ -18,6 +18,7 @@ import { config } from "@/wagmi";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { UseGetCreatorInfoReturnType } from "@/hooks/edu-streamr/types";
+import { Loader2, Save } from "lucide-react";
 
 export default function Username({
   currentUsername,
@@ -92,8 +93,9 @@ export default function Username({
             onChange={(e) => setUsername(e.target.value)}
             value={username}
           />
-          <Button type="submit" className="self-start" disabled={isLoading}>
-            Update
+          <Button type="submit" className="self-start flex items-center gap-2" disabled={isLoading}>
+          {isLoading ? <Loader2 className="animate-spin" /> : <Save />}
+          <span>Save</span>
           </Button>
         </form>
       </CardContent>

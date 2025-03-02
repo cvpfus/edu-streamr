@@ -13,6 +13,7 @@ import { EduStreamrAbi } from "@/abi/EduStreamr";
 import toast from "react-hot-toast";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import { config } from "@/wagmi";
+import { Loader2, Save } from "lucide-react";
 
 export const Duration = ({
   currentDuration,
@@ -64,12 +65,12 @@ export const Duration = ({
         },
         onError: (error) => {
           toast.error(
-            "Failed to update duration. See console for detailed error.",
+            "Failed to update duration. See console for detailed error."
           );
 
           console.error(error.message);
         },
-      },
+      }
     );
   };
 
@@ -78,7 +79,8 @@ export const Duration = ({
       <CardHeader>
         <CardTitle>Duration</CardTitle>
         <CardDescription>
-          Set the duration of a tip message displayed on-screen (in seconds).
+          Set the duration of a tip message displayed on-screen (in seconds). This action requires a small
+          transaction fee (~0.0001 EDU).
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -96,8 +98,13 @@ export const Duration = ({
             onChange={handleDurationChange}
             value={duration}
           />
-          <Button type="submit" disabled={isLoading}>
-            Save
+          <Button
+            type="submit"
+            disabled={isLoading}
+            className="flex items-center gap-2"
+          >
+            {isLoading ? <Loader2 className="animate-spin" /> : <Save />}
+            <span>Save</span>
           </Button>
         </form>
       </CardContent>
