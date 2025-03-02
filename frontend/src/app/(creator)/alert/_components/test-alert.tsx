@@ -1,5 +1,4 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { color } from "framer-motion";
 
 interface TestAlertProps {
   colors: {
