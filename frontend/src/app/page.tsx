@@ -1,24 +1,28 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { SiGithub, SiX } from "@icons-pack/react-simple-icons";
-import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
+import { Card, CardContent } from "@/components/ui/card";
+import { BadgePercent, Video, Zap } from "lucide-react";
+import GitHubIcon from "@/components/icon/GithubIcon";
+import XIcon from "@/components/icon/XIcon";
 
-const words = [
+const opportunities = [
   {
-    text: "Unlock",
+    title: "Seamless Integration for Streamers",
+    description:
+      "Streamers can easily integrate EduStreamr into their existing setup. The platform is designed to be simple for streamers.",
+    icon: <Video className="text-cyan-600 size-6" />,
   },
   {
-    text: "Web3",
+    title: "Low Platform Fees",
+    description:
+      "Streamers retain 98% of their earnings. EduStreamr is designed to be a low-fee tipping platform for streamers.",
+    icon: <BadgePercent className="text-cyan-600 size-6" />,
   },
   {
-    text: "Monetization",
-  },
-  {
-    text: "with",
-  },
-  {
-    text: "EduStreamr",
-    className: "text-cyan-600",
+    title: "Instant Payouts",
+    description:
+      "No delayed payouts. Streamers can withdraw their earnings instantly, no more delays of days or even weeks.",
+    icon: <Zap className="text-cyan-600 size-6" />,
   },
 ];
 
@@ -27,7 +31,7 @@ export default function Page() {
     <div className="min-h-screen flex flex-col">
       <div className="bg-cyan-600 text-white text-center py-1 flex items-center justify-center gap-2">
         <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-        <span>Live on EduChain Testnet</span>
+        <span>Live on EDU Chain Testnet</span>
       </div>
       <header className="flex justify-between items-center p-4 border-b">
         <img src="/logo.png" alt="EduStreamr" className="w-24" />
@@ -37,52 +41,80 @@ export default function Page() {
             className="hover:opacity-80"
             target="_blank"
           >
-            <SiGithub className="w-6 h-6 text-cyan-600" />
+            <GitHubIcon />
           </Link>
           <Link
             href="https://x.com/EduStreamr"
             className="hover:opacity-80"
             target="_blank"
           >
-            <SiX className="w-6 h-6 text-cyan-600" />
+            <XIcon />
           </Link>
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col gap-12 items-center justify-center px-4">
-        <div className="flex flex-col items-center justify-center">
-          <TypewriterEffectSmooth words={words} />
-          <Link href="/dashboard">
-            <Button size="lg">Launch App</Button>
-          </Link>
+      <main className="flex-1 flex flex-col gap-12 items-center px-4 mt-8">
+        <div className="flex flex-col gap-6 items-center justify-center text-center">
+          <p className="text-cyan-600 font-bold">
+            Web3 Monetization for Educators / Content Creators
+          </p>
+          <h1 className="text-5xl font-bold">
+            Unlock Web3 Monetization with{" "}
+            <span className="text-cyan-600">EduStreamr</span>
+          </h1>
+          <p className="text-gray-600 max-w-2xl">
+            The first decentralized platform that enables educators and content
+            creators to monetize their live streams through Web3 technology.
+          </p>
+          <div className="flex gap-4">
+            <Link href="/dashboard">
+              <Button size="lg">Launch App</Button>
+            </Link>
+            <Link href="https://docs.edustreamr.xyz" target="_blank">
+              <Button size="lg" variant="outline">
+                Learn More
+              </Button>
+            </Link>
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl w-full mb-12">
-          <div className="border rounded-lg p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-cyan-600 mb-4">
-              Decentralized Live Q&A Sessions
-            </h3>
-            <p className="text-sm">
-              Streamers can set up live Q&A sessions with EduStreamr platform
-              and get questions from their audience via tips.
-            </p>
+        <div className="bg-white w-full max-w-7xl rounded-xl">
+          <div className="w-full max-w-7xl flex items-center justify-around p-8 bg-gradient-to-br from-cyan-100/70 to-blue-100/70 backdrop-blur-sm shadow-sm border border-gray-200 text-cyan-600 [&_p]:text-gray-600 rounded-xl text-center">
+            <div>
+              <h2 className="text-3xl font-bold">X</h2>
+              <p>Active Streamers</p>
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold">X</h2>
+              <p>Tip Count</p>
+            </div>
+            <div>
+              <h2 className="text-3xl font-bold">X</h2>
+              <p>Total Streamers' Earnings</p>
+            </div>
           </div>
-          <div className="border rounded-lg p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-cyan-600 mb-4">
-              Seamless Integration for Streamers
-            </h3>
-            <p className="text-sm">
-              Streamers can easily integrate EduStreamr into their existing
-              setup. The platform is designed to be simple for all content
-              creators.
-            </p>
-          </div>
-          <div className="border rounded-lg p-6 shadow-sm">
-            <h3 className="text-lg font-bold text-cyan-600 mb-4">Web3-first</h3>
-            <p className="text-sm">
-              Built with Web3 principles, streamers own their payment channels.
-              No middlemen, ensuring direct control over revenue generation.
-            </p>
+        </div>
+
+        <div className="w-full max-w-7xl flex flex-col gap-6 items-center justify-center">
+          <h2 className="text-3xl font-bold">
+            Why choose <span className="text-cyan-600">EduStreamr?</span>
+          </h2>
+          <div className="flex gap-6">
+            {opportunities.map((opportunity, index) => {
+              return (
+                <Card key={index} className="flex gap-4">
+                  <CardContent className="pt-6 flex flex-col gap-2">
+                    {opportunity.icon}
+                    <h3 className="text-xl font-bold text-cyan-600">
+                      {opportunity.title}
+                    </h3>
+                    <p className="text-gray-600 text-justify">
+                      {opportunity.description}
+                    </p>
+                  </CardContent>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </main>
