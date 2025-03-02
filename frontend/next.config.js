@@ -6,10 +6,13 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "api.dicebear.com",
-        
       },
     ],
   },
 };
 
-module.exports = nextConfig;
+const withBundleAnalyzer = require("@next/bundle-analyzer")({
+  enabled: process.env.ANALYZE === "true",
+});
+
+module.exports = withBundleAnalyzer(nextConfig);
