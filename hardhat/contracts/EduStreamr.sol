@@ -9,7 +9,7 @@ import "./libraries/StringUtils.sol";
 
 contract EduStreamr is Ownable, IEduStreamr {
     using StringUtils for string;
-   
+
     Tip[] private tips;
     uint256 public totalTipsReceived;
     string public bio;
@@ -119,17 +119,67 @@ contract EduStreamr is Ownable, IEduStreamr {
     /// @dev Function to set the message duration
     /// @param _seconds - The duration in seconds
     function setMessageDuration(uint8 _seconds) external onlyOwner {
-        require(_seconds >= 1 && _seconds <= 120, "Duration must be between 1 and 120 seconds");
+        require(
+            _seconds >= 1 && _seconds <= 120,
+            "Duration must be between 1 and 120 seconds"
+        );
         messageDuration = _seconds;
+    }
+    
+    /// @dev Function to get the colors of the widget
+    /// @return primary - The primary color
+    /// @return secondary - The secondary color
+    /// @return background - The background color
+    function getColors() external view returns (string memory, string memory, string memory) {
+        return (colors["primary"], colors["secondary"], colors["background"]);
     }
 
     /// @dev Function to set the color of the widget
     /// @param colorType - The color type
     /// @param colorHex - The color hex
-    function setColor(string memory colorType, string memory colorHex) external onlyOwner {
-        require(colorType.isEqual("primary") || colorType.isEqual("secondary") || colorType.isEqual("background"), "Invalid color type");
+    function setColor(
+        string memory colorType,
+        string memory colorHex
+    ) external onlyOwner {
+        require(
+            colorType.isEqual("primary") ||
+                colorType.isEqual("secondary") ||
+                colorType.isEqual("background"),
+            "Invalid color type"
+        );
         require(colorHex.isColorHex(), "Invalid color hex");
 
         colors[colorType] = colorHex;
+    }
+
+    /// @dev Function to set the colors of the widget
+    /// @param primary - The primary color
+    /// @param secondary - The secondary color
+    /// @param background - The background color
+    function setColors(
+        string memory primary,
+        string memory secondary,
+        string memory background
+    ) external onlyOwner {
+        uint256 primaryLength = bytes(primary).length;
+        uint256 secondaryLength = bytes(secondary).length;
+        uint256 backgroundLength = bytes(background).length;
+
+        require(
+            primary.isColorHex() || primaryLength == 0,
+            "Invalid primary color hex"
+        );
+        require(
+            secondary.isColorHex() || secondaryLength == 0,
+            "Invalid secondary color hex"
+        );
+        require(
+            background.isColorHex() || backgroundLength == 0,
+            "Invalid background color hex"
+        );
+
+        if (primaryLength > 0) colors["primary"] = primary;
+        if (secondaryLength > 0) colors["secondary"] = secondary;
+        if (backgroundLength > 0) colors["background"] = background;
     }
 }
