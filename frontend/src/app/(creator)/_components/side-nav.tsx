@@ -25,16 +25,19 @@ export default function SideNav() {
   }
 
   return (
-    <div className="w-auto sm:w-64 border shadow-xl rounded-r-xl flex flex-col items-center gap-4 p-2 sticky top-0">
-      <Image
-        src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${username}`}
-        alt="avatar"
-        width={80}
-        height={80}
-        className="size-8 sm:size-20 rounded-full mt-4"
-      />
-      <div className="hidden sm:block">{username}</div>
-      <SideNavItems />
-    </div>
+    <>
+      <div className="shrink-0 max-w-[225px] w-16 sm:w-full" />
+      <div className="w-16 max-w-[225px] sm:w-full border shadow-xl rounded-r-xl flex flex-col items-center gap-4 p-2 fixed h-screen">
+        <Image
+          src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${username}`}
+          alt="avatar"
+          width={80}
+          height={80}
+          className="size-8 sm:size-20 rounded-full mt-4"
+        />
+        <div className="hidden sm:block">{username}</div>
+        <SideNavItems />
+      </div>
+    </>
   );
 }
