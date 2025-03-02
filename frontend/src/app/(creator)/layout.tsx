@@ -8,7 +8,7 @@ export default async function Layout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="flex overflow-auto">
+    <div className="flex">
       <SideNav />
       <div className="flex flex-col w-full mx-4">
         <div className="flex justify-end mt-4 ">
