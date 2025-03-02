@@ -10,6 +10,7 @@ import {
   ModuleRegistry,
 } from "ag-grid-community";
 import { ThirdwebProvider } from "thirdweb/react";
+import { ColorProvider } from "@/components/color-provider";
 
 ModuleRegistry.registerModules([InfiniteRowModelModule, PaginationModule]);
 
@@ -24,7 +25,7 @@ export function Providers(props: {
     <WagmiProvider config={config}>
       <ThirdwebProvider>
         <QueryClientProvider client={queryClient}>
-          {props.children}
+          <ColorProvider>{props.children}</ColorProvider>
         </QueryClientProvider>
       </ThirdwebProvider>
     </WagmiProvider>
