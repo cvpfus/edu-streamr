@@ -8,7 +8,7 @@ sidebar_position: 1
 EduStreamr uses Thirdweb's in-app wallet feature, so you don't need an external wallet like MetaMask to use the platform. However, you can still use an external wallet if you prefer. Here's how you can set it up without an external wallet:
 
 1. Visit [EduStreamr](https://edustreamr.xyz) and click on "Launch App"
-2.Click the "Connect" button at the top right, then select "Continue with Google" or enter your email address
+2. Click the "Connect" button at the top right, then select "Continue with Google" or enter your email address
 3. Complete the authentication process
 4. Your in-app wallet will be automatically created
 
