@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "cross-env NODE_OPTIONS='--inspect' next dev --turbopack",
-    "build": "cross-env ANALYZE=true next build",
+    "build": "next build",
+    "build-and-analyze": "cross-env ANALYZE=true next build",
     "start": "next start",
     "lint": "next lint"
   },
