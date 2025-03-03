@@ -39,7 +39,7 @@ const config: Config = {
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
           editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
+            "https://github.com/cvpfus/edu-streamr/edit/master/docs/",
           routeBasePath: "/",
         },
         blog: false,
@@ -62,8 +62,8 @@ const config: Config = {
     navbar: {
       title: "EduStreamr",
       logo: {
-        alt: "My Site Logo",
-        src: "img/logo.svg",
+        alt: "EduStreamr",
+        src: "img/logo.png",
       },
       items: [
         {
@@ -73,7 +73,7 @@ const config: Config = {
           label: "Docs",
         },
         {
-          href: "https://github.com/facebook/docusaurus",
+          href: "https://github.com/cvpfus/edu-streamr",
           label: "GitHub",
           position: "right",
         },
@@ -86,8 +86,8 @@ const config: Config = {
           title: "EduStreamr",
           items: [
             {
-              label: "Docs",
-              to: "/",
+              label: "Website",
+              to: "https://edustreamr.xyz",
             },
           ],
         },
@@ -98,6 +98,10 @@ const config: Config = {
               label: "X",
               href: "https://x.com/edustreamr",
             },
+            {
+              label: "Feedback",
+              href: "https://feedback.edustreamr.xyz"
+            }
           ],
         },
         {
@@ -105,7 +109,7 @@ const config: Config = {
           items: [
             {
               label: "GitHub",
-              href: "https://github.com/cvpfus/edustreamr",
+              href: "https://github.com/cvpfus/edu-streamr",
             },
           ],
         },
