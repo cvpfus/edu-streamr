@@ -53,7 +53,7 @@ export default function Page() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col gap-12 items-center px-4 mt-8">
+      <main className="flex-1 flex flex-col gap-12 items-center px-8 mt-8">
         <div className="flex flex-col gap-6 items-center justify-center text-center">
           <p className="text-cyan-600 font-bold">
             Web3 Monetization for Educators / Content Creators
@@ -79,10 +79,10 @@ export default function Page() {
         </div>
 
         <div className="bg-white w-full max-w-7xl rounded-xl">
-          <div className="w-full max-w-7xl flex items-center justify-around p-8 bg-gradient-to-br from-cyan-100/70 to-blue-100/70 backdrop-blur-sm shadow-sm border border-gray-200 text-cyan-600 [&_p]:text-gray-600 rounded-xl text-center">
+          <div className="w-full max-w-7xl flex gap-4 flex-col sm:flex-row items-center justify-around p-8 bg-gradient-to-br from-cyan-100/70 to-fuchsia-100/70 backdrop-blur-sm shadow-sm border border-gray-200 text-cyan-600 [&_p]:text-gray-600 rounded-xl text-center">
             <div>
               <h2 className="text-3xl font-bold">X</h2>
-              <p>Active Streamers</p>
+              <p>Streamers Onboarded</p>
             </div>
             <div>
               <h2 className="text-3xl font-bold">X</h2>
@@ -96,10 +96,10 @@ export default function Page() {
         </div>
 
         <div className="w-full max-w-7xl flex flex-col gap-6 items-center justify-center">
-          <h2 className="text-3xl font-bold">
+          <h2 className="text-3xl font-bold text-center">
             Why choose <span className="text-cyan-600">EduStreamr?</span>
           </h2>
-          <div className="flex gap-6">
+          <div className="flex flex-col md:flex-row gap-6">
             {opportunities.map((opportunity, index) => {
               return (
                 <Card key={index} className="flex gap-4">
