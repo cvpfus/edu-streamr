@@ -8,7 +8,7 @@ sidebar_position: 1
 
 # Introduction to EduStreamr
 
-### The Problem: Monetization Challenges for Educators
+### The Problem: Monetization Challenges for Educational Streamers
 
 Educators and content creators face significant challenges when trying to monetize their knowledge and skills:
 
