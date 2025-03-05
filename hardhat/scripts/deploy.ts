@@ -22,7 +22,7 @@ async function main() {
 
   const receipt = await publicClient.waitForTransactionReceipt({
     hash,
-    confirmations: 1,
+    confirmations: 2,
   });
 
   console.log("Contract Address:", receipt.contractAddress);
