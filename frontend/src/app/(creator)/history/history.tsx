@@ -11,7 +11,7 @@ import { useIsRegistered } from "@/hooks/use-is-registered";
 import { useAccount } from "wagmi";
 import { useGetCreatorInfoByAddress } from "@/hooks/edu-streamr";
 import { UniversalEduStreamrAddress } from "@/constants";
-import { TableData } from "./table-data";
+import { HistoryTable } from "./history-table";
 
 export default function History() {
   const accountResult = useAccount();
@@ -24,6 +24,7 @@ export default function History() {
     creatorInfoResult.status === "success"
       ? creatorInfoResult.contractAddress
       : UniversalEduStreamrAddress;
+
   const creatorAddress = accountResult.address;
 
   const isRegisteredCreator =
@@ -40,11 +41,11 @@ export default function History() {
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="w-full h-[400px]">
+        <CardContent className="w-full">
           {isRegisteredResult.status === "success" &&
             (creatorInfoResult.status === "success" ||
               creatorInfoResult.status === "error") && (
-              <TableData
+              <HistoryTable
                 contractAddress={contractAddress}
                 creatorAddress={creatorAddress}
                 isRegisteredCreator={isRegisteredCreator}

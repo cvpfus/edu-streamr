@@ -10,11 +10,11 @@ export default async function Layout({
   return (
     <div className="flex">
       <SideNav />
-      <div className="flex flex-col w-full mx-4">
+      <div className="flex flex-col w-full mx-4 h-dvh max-h-dvh">
         <div className="flex justify-end mt-4 ">
           <ConnectButton />
         </div>
-        <div className="h-dvh w-full mt-4 max-h-dvh">
+        <div className="h-full w-full mt-4">
           <Connect>{children}</Connect>
         </div>
       </div>

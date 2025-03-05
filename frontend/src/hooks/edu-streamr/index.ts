@@ -8,43 +8,7 @@ import {
   UseGetTipHistoryReturnType,
 } from "./types";
 
-export const useGetTipHistory = ({
-  contractAddress,
-  startRow,
-  endRow,
-}: {
-  contractAddress: string;
-  startRow: number;
-  endRow: number;
-}): UseGetTipHistoryReturnType => {
-  const tipHistory = useReadContract({
-    abi: EduStreamrAbi,
-    address: contractAddress,
-    functionName: "getTipHistory",
-    args: [BigInt(startRow), BigInt(endRow)],
-  });
 
-  if (tipHistory.status === "error") {
-    return {
-      status: "error",
-      errorMessage: tipHistory.error.message,
-    };
-  }
-
-  if (tipHistory.status === "pending") {
-    return {
-      status: "success",
-      paginatedTips: [],
-      tipLength: BigInt(0),
-    };
-  }
-
-  return {
-    status: "success",
-    paginatedTips: tipHistory.data[0],
-    tipLength: tipHistory.data[1],
-  };
-};
 
 export const useGetCreatorInfoByAddress = (
   address: string | undefined,

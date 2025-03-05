@@ -4,15 +4,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { type ReactNode, useState } from "react";
 import { type State, WagmiProvider } from "wagmi";
 import { config as wagmiConfig } from "@/wagmi";
-import {
-  InfiniteRowModelModule,
-  PaginationModule,
-  ModuleRegistry,
-} from "ag-grid-community";
 import { ThirdwebProvider } from "thirdweb/react";
 import { ColorProvider } from "@/components/color-provider";
-
-ModuleRegistry.registerModules([InfiniteRowModelModule, PaginationModule]);
 
 export function Providers(props: {
   children: ReactNode;

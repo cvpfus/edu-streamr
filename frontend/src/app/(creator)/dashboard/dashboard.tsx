@@ -8,7 +8,6 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import History from "./_components/history";
 import { useAccount, useBalance, useWriteContract } from "wagmi";
 import CopyButton from "@/components/ui/copy-button";
 import {
@@ -27,7 +26,6 @@ import Loading from "@/components/ui/loading";
 import { useIsRegistered } from "@/hooks/use-is-registered";
 import { cn } from "@/lib/utils";
 import { useGetUnregisteredCreatorStats } from "@/hooks/use-get-unregistered-creator-stats";
-import { UniversalEduStreamrAddress } from "@/constants";
 
 export default function Dashboard({ baseUrl }: { baseUrl: string }) {
   const accountResult = useAccount();

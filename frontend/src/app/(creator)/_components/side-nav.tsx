@@ -26,8 +26,8 @@ export default function SideNav() {
 
   return (
     <>
-      <div className="shrink-0 max-w-[225px] w-16 sm:w-full" />
-      <div className="w-16 max-w-[225px] sm:w-full border shadow-xl rounded-r-xl flex flex-col items-center gap-4 p-2 fixed h-dvh">
+      <div className="shrink-0 max-w-[225px] w-16 sm:w-full h-dvh" />
+      <div className="w-16 max-w-[225px] sm:w-full border shadow-xl rounded-r-xl flex flex-col items-center gap-4 p-2 fixed h-dvh bg-background z-50">
         <Image
           src={`https://api.dicebear.com/6.x/thumbs/svg?seed=${username}`}
           alt="avatar"
