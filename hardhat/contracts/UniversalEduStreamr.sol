@@ -115,22 +115,22 @@ contract UniversalEduStreamr is Ownable, IEduStreamr {
         });
     }
 
-    /// @dev Function to get tip history with pagination using row numbers
-    /// @param startRow - Start row number
-    /// @param endRow - End row number
-    /// @return paginatedTips - Array of tips in the specified row range
+    /// @dev Function to get tip history with pagination using page numbers
+    /// @param pageIndex - Page index
+    /// @param pageSize - Page size
+    /// @return paginatedTips - Array of tips in the specified page range
     function getTipHistory(
         address creatorAddress,
-        uint256 startRow,
-        uint256 endRow
+        uint256 pageIndex,
+        uint256 pageSize
     ) external view returns (Tip[] memory paginatedTips, uint256 totalTips) {
         totalTips = tips[creatorAddress].length;
 
         paginatedTips = EduStreamrLib.getTipHistory(
             tips[creatorAddress],
             totalTips,
-            startRow,
-            endRow
+            pageIndex,
+            pageSize
         );
     }
 

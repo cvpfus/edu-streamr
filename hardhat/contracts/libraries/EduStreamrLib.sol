@@ -7,25 +7,29 @@ library EduStreamrLib {
     /// @dev Function to get tip history with pagination using row numbers
     /// @param tips - Array of tips
     /// @param totalTips - Total number of tips
-    /// @param startRow - Start row number
-    /// @param endRow - End row number
+    /// @param pageIndex - Page index
+    /// @param pageSize - Page size
     /// @return paginatedTips - Array of tips in the specified row range
     function getTipHistory(
         IEduStreamr.Tip[] memory tips,
         uint256 totalTips,
-        uint256 startRow,
-        uint256 endRow
+        uint256 pageIndex,
+        uint256 pageSize
     ) internal pure returns (IEduStreamr.Tip[] memory paginatedTips) {
-        require(startRow < endRow, "Invalid row range");
-
-        uint256 end = endRow;
+        require(pageSize > 0, "Page size must be greater than zero");
+        
+        uint256 start = pageIndex * pageSize;
+        uint256 end = start + pageSize;
+        
         if (end > totalTips) {
             end = totalTips;
         }
-
-        paginatedTips = new IEduStreamr.Tip[](end - startRow);
-        for (uint256 i = startRow; i < end; i++) {
-            paginatedTips[i - startRow] = tips[i];
+        
+        require(start < totalTips, "Page index out of range");
+        
+        paginatedTips = new IEduStreamr.Tip[](end - start);
+        for (uint256 i = start; i < end; i++) {
+            paginatedTips[i - start] = tips[i];
         }
     }
 }

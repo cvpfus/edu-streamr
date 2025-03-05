@@ -8,7 +8,7 @@ import {
 import { client } from "@/client";
 
 export const UniversalEduStreamrAddress =
-  "0x921c89bb6b95e744129f117815b7f39af2ce8e65";
+  "0x87e841f7bd522ddaff1e2c09c0cff1c627060997";
 
 export const educhainTestnet = defineChain({
   id: 656476,
