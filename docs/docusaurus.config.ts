@@ -30,6 +30,8 @@ const config: Config = {
     locales: ["en"],
   },
 
+  plugins: [["@orama/plugin-docusaurus-v3", {}]],
+
   presets: [
     [
       "classic",
@@ -38,8 +40,7 @@ const config: Config = {
           sidebarPath: "./sidebars.ts",
           // Please change this to your repo.
           // Remove this to remove the "edit this page" links.
-          editUrl:
-            "https://github.com/cvpfus/edu-streamr/edit/master/docs/",
+          editUrl: "https://github.com/cvpfus/edu-streamr/edit/master/docs/",
           routeBasePath: "/",
         },
         blog: false,
@@ -100,8 +101,8 @@ const config: Config = {
             },
             {
               label: "Feedback",
-              href: "https://feedback.edustreamr.xyz"
-            }
+              href: "https://feedback.edustreamr.xyz",
+            },
           ],
         },
         {
