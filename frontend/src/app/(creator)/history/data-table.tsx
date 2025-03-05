@@ -69,7 +69,7 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-md border max-h-[500px] overflow-y-auto">
+      <div className="rounded-md border overflow-y-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
@@ -120,7 +120,7 @@ export function DataTable<TData, TValue>({
         </Table>
       </div>
       <div className="flex gap-8 justify-end items-center">
-        <div className="flex items-center gap-2">
+        <div className="hidden md:flex md:items-center md:gap-2">
           <p className="text-sm font-medium">Rows per page</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}

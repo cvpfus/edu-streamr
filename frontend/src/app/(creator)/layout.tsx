@@ -10,7 +10,7 @@ export default async function Layout({
   return (
     <div className="flex">
       <SideNav />
-      <div className="flex flex-col w-full mx-4 h-dvh max-h-dvh">
+      <div className="flex flex-col w-full px-4 h-dvh max-h-dvh max-w-[calc(100dvw-64px)]">
         <div className="flex justify-end mt-4 ">
           <ConnectButton />
         </div>

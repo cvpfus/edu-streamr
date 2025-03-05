@@ -39,9 +39,7 @@ export const HistoryTable = ({
     : universalTipHistory;
 
   const data =
-    tipHistoryResult.status === "success"
-      ? tipHistoryResult.paginatedTips
-      : [];
+    tipHistoryResult.status === "success" ? tipHistoryResult.paginatedTips : [];
 
   const rowCount =
     tipHistoryResult.status === "success"
@@ -49,7 +47,7 @@ export const HistoryTable = ({
       : undefined;
 
   return (
-    <div className="">
+    <>
       {data && (
         <DataTable
           columns={columns}
@@ -59,6 +57,6 @@ export const HistoryTable = ({
           rowCount={Number(rowCount ?? 1)}
         />
       )}
-    </div>
+    </>
   );
 };
