@@ -7,6 +7,7 @@ import { Duration } from "./_components/duration";
 import { useGetDuration } from "@/hooks/use-get-duration";
 import { WidgetColors } from "./_components/widget-colors";
 import { useGetColors } from "@/hooks/use-get-colors";
+import { TestTip } from "./_components/test-tip";
 
 export default function Alert({ baseUrl }: { baseUrl: string }) {
   const accountResult = useAccount();
@@ -47,9 +48,12 @@ export default function Alert({ baseUrl }: { baseUrl: string }) {
       : undefined;
 
   return (
-    <div className="flex flex-col gap-4 mt-4">
+    <div className="flex flex-col gap-4 py-4">
       <div className="font-bold block sm:hidden">Alert</div>
-      <AlertUrl fullUrl={fullUrl} username={username} />
+      <div className="w-full flex flex-col md:flex-row gap-4">
+        <AlertUrl fullUrl={fullUrl} username={username} />
+        <TestTip />
+      </div>
       {duration && (
         <Duration
           currentDuration={duration}
@@ -57,10 +61,12 @@ export default function Alert({ baseUrl }: { baseUrl: string }) {
         />
       )}
       {creatorInfoResult.status === "success" &&
-        colorsResult.status ===
-          "success" && (
-            <WidgetColors contractAddress={creatorInfoResult.contractAddress} colors={colorsResult.colors} />
-          )}
+        colorsResult.status === "success" && (
+          <WidgetColors
+            contractAddress={creatorInfoResult.contractAddress}
+            colors={colorsResult.colors}
+          />
+        )}
     </div>
   );
 }
