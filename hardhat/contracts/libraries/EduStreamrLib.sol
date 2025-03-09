@@ -17,16 +17,16 @@ library EduStreamrLib {
         uint256 pageSize
     ) internal pure returns (IEduStreamr.Tip[] memory paginatedTips) {
         require(pageSize > 0, "Page size must be greater than zero");
-        
-        uint256 start = pageIndex * pageSize;
-        uint256 end = start + pageSize;
-        
-        if (end > totalTips) {
-            end = totalTips;
-        }
-        
-        require(start < totalTips, "Page index out of range");
-        
+
+        uint256 start = (totalTips > (pageIndex + 1) * pageSize)
+            ? totalTips - (pageIndex + 1) * pageSize
+            : 0;
+        uint256 end = (totalTips > pageIndex * pageSize)
+            ? totalTips - pageIndex * pageSize
+            : 0;
+
+        require(end > start, "Page index out of range");
+
         paginatedTips = new IEduStreamr.Tip[](end - start);
         for (uint256 i = start; i < end; i++) {
             paginatedTips[i - start] = tips[i];
