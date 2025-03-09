@@ -2,9 +2,10 @@
 
 import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
-import { ArrowDownIcon, ArrowUpIcon, ChevronsUpDownIcon } from "lucide-react";
+import { Zap } from "lucide-react";
+import { ActionCell } from "./_components/action-cell";
 
-interface History {
+export interface History {
   timestamp: string;
   amount: string;
   senderName: string;
@@ -14,23 +15,7 @@ interface History {
 export const columns: ColumnDef<History>[] = [
   {
     accessorKey: "timestamp",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Tipped At
-          {column.getIsSorted() === 'desc' ? (
-              <ArrowDownIcon className="ml-2 h-4 w-4" />
-            ) : column.getIsSorted() === 'asc' ? (
-              <ArrowUpIcon className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
-            )}
-        </Button>
-      );
-    },
+    header: "Tipped At",
   },
   {
     accessorKey: "senderName",
@@ -38,26 +23,17 @@ export const columns: ColumnDef<History>[] = [
   },
   {
     accessorKey: "amount",
-    header: ({ column }) => {
-      return (
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          Amount (EDU)
-          {column.getIsSorted() === 'desc' ? (
-              <ArrowDownIcon className="ml-2 h-4 w-4" />
-            ) : column.getIsSorted() === 'asc' ? (
-              <ArrowUpIcon className="ml-2 h-4 w-4" />
-            ) : (
-              <ChevronsUpDownIcon className="ml-2 h-4 w-4" />
-            )}
-        </Button>
-      );
-    },
+    header: "Amount (EDU)",
   },
   {
     accessorKey: "message",
     header: "Message",
+  },
+  {
+    accessorKey: "actions",
+    header: "Actions",
+    cell: ({ row }) => {
+      return ActionCell({ row });
+    },
   },
 ];

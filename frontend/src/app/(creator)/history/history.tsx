@@ -31,7 +31,7 @@ export default function History() {
     isRegisteredResult.status === "success" ? isRegisteredResult.data : false;
 
   return (
-    <div className="flex flex-col gap-4 mt-4">
+    <div className="flex flex-col gap-4 py-4">
       <div className="font-bold block sm:hidden">Tip History</div>
       <Card>
         <CardHeader>

@@ -34,6 +34,7 @@ import {
   ChevronsLeft,
   ChevronsRight,
 } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -69,19 +70,24 @@ export function DataTable<TData, TValue>({
 
   return (
     <div className="space-y-4">
-      <div className="rounded-md border overflow-y-auto">
+      <div className="rounded-md border overflow-auto">
         <Table>
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   return (
-                    <TableHead key={header.id}>
+                    <TableHead
+                      key={header.id}
+                      className={cn(
+                        header.id.includes("message") ? "min-w-[300px]" : ""
+                      )}
+                    >
                       {header.isPlaceholder
                         ? null
                         : flexRender(
                             header.column.columnDef.header,
-                            header.getContext(),
+                            header.getContext()
                           )}
                     </TableHead>
                   );
@@ -97,10 +103,15 @@ export function DataTable<TData, TValue>({
                   data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                    <TableCell
+                      key={cell.id}
+                      className={cn(
+                        cell.id.includes("message") ? "min-w-[300px]" : ""
+                      )}
+                    >
                       {flexRender(
                         cell.column.columnDef.cell,
-                        cell.getContext(),
+                        cell.getContext()
                       )}
                     </TableCell>
                   ))}
@@ -142,11 +153,11 @@ export function DataTable<TData, TValue>({
         </div>
         <p className="text-sm font-medium">
           Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount() ?? 1}
+          {table.getPageCount() === 0 ? 1 : table.getPageCount() ?? 1}
         </p>
         <div className="flex items-center gap-2">
           <Button
-            variant="outline"
+            variant="neutral"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
@@ -155,7 +166,7 @@ export function DataTable<TData, TValue>({
             <ChevronsLeft />
           </Button>
           <Button
-            variant="outline"
+            variant="neutral"
             className="h-8 w-8 p-0"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
@@ -164,7 +175,7 @@ export function DataTable<TData, TValue>({
             <ChevronLeft />
           </Button>
           <Button
-            variant="outline"
+            variant="neutral"
             className="h-8 w-8 p-0"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
@@ -173,7 +184,7 @@ export function DataTable<TData, TValue>({
             <ChevronRight />
           </Button>
           <Button
-            variant="outline"
+            variant="neutral"
             className="hidden h-8 w-8 p-0 lg:flex"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
