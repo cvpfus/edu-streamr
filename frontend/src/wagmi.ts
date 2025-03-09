@@ -11,6 +11,9 @@ export const config = createConfig({
   transports: {
     [educhainTestnet.id]: webSocket(
       "wss://ws.open-campus-codex.gelato.digital",
+      {
+        retryCount: 20,
+      }
     ),
   },
 });
