@@ -30,7 +30,9 @@ export const ConnectButton = () => {
     <ThirdwebConnectButton
       wallets={wallets}
       client={client}
-      connectButton={{ style: { backgroundColor: "#209bb9", color: "white" } }}
+      connectButton={{
+        style: { backgroundColor: "#209bb9", color: "white" },
+      }}
       chain={thirdwebEduchainTestnet}
       onConnect={() => reconnect()}
       onDisconnect={() => disconnect()}

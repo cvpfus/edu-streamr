@@ -2,16 +2,10 @@ import { EduStreamrAbi } from "@/abi/EduStreamr";
 import { useReadContract, useReadContracts } from "wagmi";
 import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
 import { UniversalEduStreamrAddress } from "@/constants";
-import {
-  UseGetCreatorInfoReturnType,
-  UseGetStatsReturnType,
-  UseGetTipHistoryReturnType,
-} from "./types";
-
-
+import { UseGetCreatorInfoReturnType, UseGetStatsReturnType } from "./types";
 
 export const useGetCreatorInfoByAddress = (
-  address: string | undefined,
+  address: string | undefined
 ): UseGetCreatorInfoReturnType => {
   const result = useReadContract({
     abi: UniversalEduStreamrAbi,
@@ -22,6 +16,8 @@ export const useGetCreatorInfoByAddress = (
       enabled: !!address,
     },
   });
+
+  if (!address) return { status: "error", errorMessage: "Address is required" };
 
   if (result.status === "error") {
     return {
@@ -53,7 +49,7 @@ export const useGetCreatorInfoByAddress = (
 };
 
 export const useGetCreatorInfoByUsername = (
-  username: string,
+  username: string
 ): UseGetCreatorInfoReturnType => {
   const result = useReadContract({
     abi: UniversalEduStreamrAbi,
@@ -92,7 +88,7 @@ export const useGetCreatorInfoByUsername = (
 };
 
 export const useGetCreatorStats = (
-  contractAddress: string | undefined,
+  contractAddress: string | undefined
 ): UseGetStatsReturnType => {
   const result = useReadContracts({
     contracts: [
