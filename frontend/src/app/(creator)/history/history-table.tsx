@@ -4,6 +4,11 @@ import { columns } from "./columns";
 import { useGetTipHistory } from "@/hooks/use-get-tip-history";
 import { useEffect, useState } from "react";
 import { PaginationState } from "@tanstack/react-table";
+import { useWatchContractEvent } from "wagmi";
+import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
+import { UniversalEduStreamrAddress } from "@/constants";
+import { useQueryClient } from "@tanstack/react-query";
+import { EduStreamrAbi } from "@/abi/EduStreamr";
 import { getBlockNumber } from "@wagmi/core";
 import { config } from "@/wagmi";
 
@@ -22,6 +27,8 @@ export const HistoryTable = ({
     pageIndex: 0,
     pageSize: 10,
   });
+
+  const queryClient = useQueryClient();
 
   const tipHistory = useGetTipHistory({
     contractAddress,
@@ -51,6 +58,34 @@ export const HistoryTable = ({
       clearInterval(intervalId);
     };
   }, []);
+
+  useWatchContractEvent({
+    abi: UniversalEduStreamrAbi,
+    address: UniversalEduStreamrAddress,
+    eventName: "TipReceived",
+    args: {
+      recipientAddress: creatorAddress,
+    },
+    onLogs: async () => {
+      setTimeout(async () => {
+        await queryClient.invalidateQueries();
+      }, 1000);
+    },
+    enabled: !!creatorAddress,
+  });
+
+  useWatchContractEvent({
+    abi: EduStreamrAbi,
+    address: contractAddress,
+    eventName: "TipReceived",
+    onLogs: async () => {
+      setTimeout(async () => {
+        await queryClient.invalidateQueries();
+      }, 1000);
+    },
+    enabled: isRegisteredCreator,
+  });
+
   const tipHistoryResult = isRegisteredCreator
     ? tipHistory
     : universalTipHistory;
@@ -68,7 +103,7 @@ export const HistoryTable = ({
       {data && (
         <DataTable
           columns={columns}
-          data={[...data]}
+          data={[...data].reverse()}
           pagination={pagination}
           setPagination={setPagination}
           rowCount={Number(rowCount ?? 1)}
