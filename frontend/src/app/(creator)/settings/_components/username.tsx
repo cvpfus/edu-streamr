@@ -8,17 +8,17 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import { useWriteContract } from "wagmi";
+import { BaseError, useWriteContract } from "wagmi";
 import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
 import { UniversalEduStreamrAddress } from "@/constants";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import { config } from "@/wagmi";
 import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { UseGetCreatorInfoReturnType } from "@/hooks/edu-streamr/types";
-import { Loader2, Save } from "lucide-react";
+import { Save } from "lucide-react";
+import { useTxHash } from "@/hooks/use-tx-hash";
+import { TxButton } from "../../_components/tx-button";
 
 export default function Username({
   currentUsername,
@@ -27,6 +27,8 @@ export default function Username({
 }) {
   const [username, setUsername] = useState(currentUsername);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { txHash, setTxHashWithTimeout } = useTxHash();
 
   const { writeContract } = useWriteContract();
 
@@ -48,17 +50,26 @@ export default function Username({
         onSuccess: async (data) => {
           await waitForTransactionReceipt(config, { hash: data });
 
-          setIsLoading(false);
+          setTimeout(async () => {
+            await queryClient.invalidateQueries();
+          }, 1000);
 
-          await queryClient.invalidateQueries();
+          setTxHashWithTimeout(data);
 
           toast.success("Username updated");
-        },
-        onError: (error) => {
-          toast.error(error.message);
           setIsLoading(false);
         },
-      },
+        onError: (error) => {
+          toast.error(
+            (error as BaseError).details ||
+              "Update username failed. See console for detailed error."
+          );
+
+          console.error(error.message);
+
+          setIsLoading(false);
+        },
+      }
     );
   };
 
@@ -93,10 +104,12 @@ export default function Username({
             onChange={(e) => setUsername(e.target.value)}
             value={username}
           />
-          <Button type="submit" className="self-start flex items-center gap-2" disabled={isLoading}>
-          {isLoading ? <Loader2 className="animate-spin" /> : <Save />}
-          <span>Save</span>
-          </Button>
+          <TxButton
+            isLoading={isLoading}
+            txHash={txHash}
+            icon={Save}
+            text="Save"
+          />
         </form>
       </CardContent>
     </Card>

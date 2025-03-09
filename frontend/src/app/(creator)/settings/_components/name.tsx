@@ -15,19 +15,19 @@ import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
 import { UniversalEduStreamrAddress } from "@/constants";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import { config } from "@/wagmi";
-import { useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { Loader2, Save } from "lucide-react";
+import { Save } from "lucide-react";
+import { useTxHash } from "@/hooks/use-tx-hash";
+import { TxButton } from "../../_components/tx-button";
+import { BaseError } from "wagmi";
 
 export default function Name({ currentName }: { currentName?: string }) {
-  console.log("Name 2", currentName);
-
   const [name, setName] = useState(currentName ?? "");
   const [isLoading, setIsLoading] = useState(false);
 
-  const { writeContract } = useWriteContract();
+  const { txHash, setTxHashWithTimeout } = useTxHash();
 
-  const queryClient = useQueryClient();
+  const { writeContract } = useWriteContract();
 
   const handleUpdate = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,14 +45,20 @@ export default function Name({ currentName }: { currentName?: string }) {
         onSuccess: async (data) => {
           await waitForTransactionReceipt(config, { hash: data });
 
-          setIsLoading(false);
-
-          await queryClient.invalidateQueries();
+          setTxHashWithTimeout(data);
 
           toast.success("Name updated");
+
+          setIsLoading(false);
         },
         onError: (error) => {
-          toast.error(error.message);
+          toast.error(
+            (error as BaseError).details ||
+              "Failed update name. See console for detailed error."
+          );
+
+          console.error(error.message);
+
           setIsLoading(false);
         },
       }
@@ -90,14 +96,12 @@ export default function Name({ currentName }: { currentName?: string }) {
             onChange={(e) => setName(e.target.value)}
             value={name}
           />
-          <Button
-            type="submit"
-            className="self-start flex items-center gap-2"
-            disabled={isLoading}
-          >
-            {isLoading ? <Loader2 className="animate-spin" /> : <Save />}
-            <span>Save</span>
-          </Button>
+          <TxButton
+            isLoading={isLoading}
+            txHash={txHash}
+            icon={Save}
+            text="Save"
+          />
         </form>
       </CardContent>
     </Card>

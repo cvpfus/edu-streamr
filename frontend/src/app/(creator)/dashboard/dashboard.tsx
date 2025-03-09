@@ -4,6 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -19,13 +20,17 @@ import { Button } from "@/components/ui/button";
 import { EduStreamrAbi } from "@/abi/EduStreamr";
 import toast from "react-hot-toast";
 import { useState } from "react";
-import { ArrowUpFromLine, Loader2 } from "lucide-react";
+import { ArrowUpFromLine, Loader2, RefreshCw } from "lucide-react";
 import { config } from "@/wagmi";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import Loading from "@/components/ui/loading";
 import { useIsRegistered } from "@/hooks/use-is-registered";
 import { cn } from "@/lib/utils";
 import { useGetUnregisteredCreatorStats } from "@/hooks/use-get-unregistered-creator-stats";
+import { useTxHash } from "@/hooks/use-tx-hash";
+import Link from "next/link";
+import { EXPLORER_TX_BASE_URL } from "@/constants";
+import { BaseError } from "wagmi";
 
 export default function Dashboard({ baseUrl }: { baseUrl: string }) {
   const accountResult = useAccount();
@@ -33,6 +38,8 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
   const creatorInfoResult = useGetCreatorInfoByAddress(accountResult.address);
 
   const { writeContract } = useWriteContract();
+
+  const { txHash, setTxHashWithTimeout } = useTxHash();
 
   const isRegisteredResult = useIsRegistered(accountResult.address ?? "");
 
@@ -57,8 +64,10 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
   });
 
   if (
-    accountResult.status === "reconnecting" ||
-    creatorInfoResult.status === "pending"
+    creatorInfoResult.status === "pending" ||
+    isRegisteredResult.status === "pending" ||
+    unregisteredCreatorStatsResult.status === "pending" ||
+    !accountResult.isConnected
   ) {
     return <Loading />;
   }
@@ -93,14 +102,23 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
       {
         onSuccess: async (data) => {
           await waitForTransactionReceipt(config, { hash: data });
-          setIsLoading(false);
+
+          setTxHashWithTimeout(data);
 
           await contractBalanceResult.refetch();
 
           toast.success("Withdraw successful.");
+
+          setIsLoading(false);
         },
         onError: (error) => {
-          toast.error(error.message);
+          toast.error(
+            (error as BaseError).details ||
+              "Failed to withdraw. See console for detailed error."
+          );
+
+          console.error(error.message);
+
           setIsLoading(false);
         },
       }
@@ -108,7 +126,7 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
   };
 
   return (
-    <div className="flex flex-col gap-4 mt-4">
+    <div className="flex flex-col gap-4 py-4">
       <div className="font-bold block sm:hidden">Dashboard</div>
       <Card>
         <CardHeader>
@@ -174,6 +192,19 @@ export default function Dashboard({ baseUrl }: { baseUrl: string }) {
               <span>Withdraw</span>
             </Button>
           </CardContent>
+          {txHash ? (
+            <CardFooter>
+              <Link
+                href={`${EXPLORER_TX_BASE_URL}/${txHash}`}
+                className="underline text-xs"
+                target="blank"
+              >
+                Success! Click here to view the transaction.
+              </Link>
+            </CardFooter>
+          ) : (
+            ""
+          )}
         </Card>
         <Card className="w-full">
           <CardHeader>
