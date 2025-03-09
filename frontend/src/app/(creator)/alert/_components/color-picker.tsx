@@ -74,8 +74,8 @@ export const ColorPicker = ({
         <Popover>
           <PopoverTrigger asChild>
             <Button
-              variant="outline"
-              className="max-w-[240px] w-full justify-start text-left font-normal"
+              variant="noShadow"
+              className="max-w-[240px] bg-white w-full justify-start text-left font-normal"
             >
               <div className="w-full flex items-center gap-2">
                 <div
@@ -88,7 +88,7 @@ export const ColorPicker = ({
               </div>
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-full">
+          <PopoverContent className="w-full bg-white">
             <div className="grid gap-4">
               <Saturation hsva={hsva} onChange={handleSaturationChange} />
               <Slider
@@ -96,7 +96,7 @@ export const ColorPicker = ({
                 onValueChange={handleHueChange}
                 max={360}
                 step={1}
-                className="[&_.bg-primary]:bg-transparent [&_.bg-primary\/20]:bg-transparent h-2"
+                className="[&_.bg-main]:bg-transparent [&_.bg-bw]:bg-transparent h-2"
                 style={{
                   backgroundImage: `linear-gradient(to right, 
                     hsl(0, 100%, 50%),
