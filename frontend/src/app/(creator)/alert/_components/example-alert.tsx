@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface TestAlertProps {
+interface ExampleAlertProps {
   colors: {
     primary: string;
     secondary: string;
@@ -8,16 +8,17 @@ interface TestAlertProps {
   };
 }
 
-export const TestAlert = ({ colors }: TestAlertProps) => {
+export const ExampleAlert = ({ colors }: ExampleAlertProps) => {
   return (
     <Card
       className="w-full text-center"
       style={{ backgroundColor: colors.background }}
+      id="example-alert"
     >
       <CardHeader>
         <CardTitle className="font-normal">
           <span className="font-medium" style={{ color: colors.secondary }}>
-            Anonymous{" "}
+            EduStreamr{" "}
           </span>
           <span style={{ color: colors.primary }}>tipped </span>
           <span className="font-medium" style={{ color: colors.secondary }}>
