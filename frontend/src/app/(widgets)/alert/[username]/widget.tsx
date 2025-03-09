@@ -12,6 +12,7 @@ import { useGetColors } from "@/hooks/use-get-colors";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useGetDuration } from "@/hooks/use-get-duration";
 import { useIsRegistered } from "@/hooks/use-is-registered";
+import { getBlockNumber } from "@wagmi/core";
 import { config } from "@/wagmi";
 
 interface Message {
@@ -41,6 +42,22 @@ export default function Widget({ username }: { username: string }) {
     contractAddress:
       result.status === "success" ? result.contractAddress : undefined,
   });
+
+  useEffect(() => {
+    const heartbeat = async () => {
+      try {
+        await getBlockNumber(config);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    let intervalId = setInterval(heartbeat, 1 * 10 * 1000); // 10 seconds
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   useWatchContractEvent({
     abi: UniversalEduStreamrAbi,

@@ -2,8 +2,10 @@ import { useGetUniversalTipHistory } from "@/hooks/use-get-universal-tip-history
 import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { useGetTipHistory } from "@/hooks/use-get-tip-history";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PaginationState } from "@tanstack/react-table";
+import { getBlockNumber } from "@wagmi/core";
+import { config } from "@/wagmi";
 
 interface HistoryTableProps {
   isRegisteredCreator: boolean;
@@ -34,6 +36,21 @@ export const HistoryTable = ({
     pageSize: pagination.pageSize,
   });
 
+  useEffect(() => {
+    const heartbeat = async () => {
+      try {
+        await getBlockNumber(config);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    let intervalId = setInterval(heartbeat, 1 * 10 * 1000); // 10 seconds
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
   const tipHistoryResult = isRegisteredCreator
     ? tipHistory
     : universalTipHistory;
