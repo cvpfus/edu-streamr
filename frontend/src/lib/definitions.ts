@@ -9,7 +9,7 @@ export const formSchema = z
   message: z
     .string()
     .min(1, { message: "Message must be at least 1 character" })
-    .max(150, { message: "Message must be at most 150 characters" }),
+    .max(250, { message: "Message must be at most 250 characters" }),
   anonymous: z.boolean(),
 })
 .refine(
