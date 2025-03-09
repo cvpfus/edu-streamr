@@ -1,43 +1,53 @@
-import { EduStreamrAbi } from "@/abi/EduStreamr"
-import { useReadContract } from "wagmi"
-import { ErrorReturnType, PendingReturnType } from "./types"
+import { EduStreamrAbi } from "@/abi/EduStreamr";
+import { useReadContract } from "wagmi";
+import { ErrorReturnType, PendingReturnType } from "./types";
 
 interface SuccessReturnType {
   status: "success";
-  bio: string
+  bio: string;
 }
 
-type UseGetBioReturnType = | SuccessReturnType | ErrorReturnType | PendingReturnType
+type UseGetBioReturnType =
+  | SuccessReturnType
+  | ErrorReturnType
+  | PendingReturnType;
 
 export const useGetBio = ({
-  contractAddress
+  contractAddress,
 }: {
-  contractAddress: string | undefined
+  contractAddress: string | undefined;
 }): UseGetBioReturnType => {
   const result = useReadContract({
     abi: EduStreamrAbi,
     address: contractAddress,
     functionName: "bio",
     query: {
-      enabled: !!contractAddress
-    }
-  })
-  
+      enabled: !!contractAddress,
+    },
+  });
+
+  if (!contractAddress) {
+    return {
+      status: "error",
+      errorMessage: "Contract address is undefined",
+    };
+  }
+
   if (result.status === "error") {
     return {
       status: "error",
-      errorMessage: result.error.message
-    }
+      errorMessage: result.error.message,
+    };
   }
 
   if (result.status === "pending") {
     return {
-      status: "pending"
-    }
+      status: "pending",
+    };
   }
 
   return {
     status: "success",
-    bio: result.data
-  }
-}
+    bio: result.data,
+  };
+};
