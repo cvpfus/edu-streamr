@@ -188,6 +188,29 @@ export const EduStreamrAbi = [
     type: "function",
   },
   {
+    inputs: [
+      {
+        internalType: "string",
+        name: "senderName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "message",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "emitTipEvent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "getColors",
     outputs: [
@@ -227,12 +250,12 @@ export const EduStreamrAbi = [
     inputs: [
       {
         internalType: "uint256",
-        name: "startRow",
+        name: "pageIndex",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "endRow",
+        name: "pageSize",
         type: "uint256",
       },
     ],
@@ -313,6 +336,13 @@ export const EduStreamrAbi = [
   {
     inputs: [],
     name: "renounceOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "sendTestTip",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

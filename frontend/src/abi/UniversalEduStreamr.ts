@@ -265,6 +265,34 @@ export const UniversalEduStreamrAbi = [
         name: "creatorAddress",
         type: "address",
       },
+      {
+        internalType: "string",
+        name: "senderName",
+        type: "string",
+      },
+      {
+        internalType: "string",
+        name: "message",
+        type: "string",
+      },
+      {
+        internalType: "uint256",
+        name: "amount",
+        type: "uint256",
+      },
+    ],
+    name: "emitTipEvent",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [
+      {
+        internalType: "address",
+        name: "creatorAddress",
+        type: "address",
+      },
     ],
     name: "getTipCount",
     outputs: [
@@ -286,12 +314,12 @@ export const UniversalEduStreamrAbi = [
       },
       {
         internalType: "uint256",
-        name: "startRow",
+        name: "pageIndex",
         type: "uint256",
       },
       {
         internalType: "uint256",
-        name: "endRow",
+        name: "pageSize",
         type: "uint256",
       },
     ],
