@@ -39,6 +39,17 @@ contract EduStreamr is Ownable, IEduStreamr {
         }
     }
 
+    function sendTestTip() external onlyOwner {
+        emit TipReceived({
+            recipientAddress: owner(),
+            senderAddress: owner(),
+            senderName: "EduStreamr",
+            message: "This is a test tip",
+            amount: 100 ether,
+            timestamp: block.timestamp
+        });
+    }
+
     /// @dev Function to store a new tip
     /// @param senderName - The name of the sender
     /// @param message - The message sent with the tip
@@ -47,6 +58,11 @@ contract EduStreamr is Ownable, IEduStreamr {
         string calldata message
     ) external payable {
         require(msg.value > 0, "Tip amount must be greater than zero");
+
+        require(
+            bytes(message).length >= 1 && bytes(message).length <= 250,
+            "Message must be between 1 and 250 characters"
+        );
 
         Tip memory tip = Tip({
             recipientAddress: owner(),
@@ -68,6 +84,25 @@ contract EduStreamr is Ownable, IEduStreamr {
             message: tip.message,
             amount: tip.amount,
             timestamp: tip.timestamp
+        });
+    }
+
+    /// @dev Function to emit a tip event
+    /// @param senderName - The name of the sender
+    /// @param message - The message sent with the tip
+    /// @param amount - The amount of the tip
+    function emitTipEvent(
+        string calldata senderName,
+        string calldata message,
+        uint256 amount
+    ) external onlyOwner {
+        emit TipReceived({
+            recipientAddress: owner(),
+            senderAddress: owner(),
+            senderName: senderName,
+            message: message,
+            amount: amount,
+            timestamp: block.timestamp
         });
     }
 
@@ -110,8 +145,8 @@ contract EduStreamr is Ownable, IEduStreamr {
     /// @param newBio - The bio
     function setBio(string calldata newBio) external onlyOwner {
         require(
-            bytes(newBio).length <= 130,
-            "Bio must be less than 130 characters"
+            bytes(newBio).length >= 1 && bytes(newBio).length <= 130,
+            "Bio must be between 1 and 130 characters"
         );
         bio = newBio;
     }
@@ -125,12 +160,16 @@ contract EduStreamr is Ownable, IEduStreamr {
         );
         messageDuration = _seconds;
     }
-    
+
     /// @dev Function to get the colors of the widget
     /// @return primary - The primary color
     /// @return secondary - The secondary color
     /// @return background - The background color
-    function getColors() external view returns (string memory, string memory, string memory) {
+    function getColors()
+        external
+        view
+        returns (string memory, string memory, string memory)
+    {
         return (colors["primary"], colors["secondary"], colors["background"]);
     }
 
