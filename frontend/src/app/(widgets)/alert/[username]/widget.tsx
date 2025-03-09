@@ -76,7 +76,7 @@ export default function Widget({ username }: { username: string }) {
     enabled: result.status === "success",
   });
 
-  const [play] = useSound("/kaching.mp3");
+  const [play] = useSound("/alert.mp3");
 
   const duration =
     durationResult.status === "success" ? durationResult.duration : 5;
