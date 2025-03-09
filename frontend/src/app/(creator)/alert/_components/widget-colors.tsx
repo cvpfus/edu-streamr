@@ -14,8 +14,11 @@ import { useMemo, useState } from "react";
 import { waitForTransactionReceipt } from "@wagmi/core";
 import { config } from "@/wagmi";
 import toast from "react-hot-toast";
-import { TestAlert } from "./test-alert";
+import { ExampleAlert } from "./example-alert";
 import { Loader2, Save } from "lucide-react";
+import { useTxHash } from "@/hooks/use-tx-hash";
+import { TxButton } from "../../_components/tx-button";
+import { BaseError } from "wagmi";
 
 interface WidgetColorsProps {
   contractAddress: string;
@@ -32,6 +35,8 @@ export const WidgetColors = ({
 }: WidgetColorsProps) => {
   const [isLoading, setIsLoading] = useState(false);
 
+  const { txHash, setTxHashWithTimeout } = useTxHash();
+
   const { primaryColor, secondaryColor, backgroundColor } = useColor();
 
   const { writeContract } = useWriteContract();
@@ -47,20 +52,26 @@ export const WidgetColors = ({
         args: [primaryColor, secondaryColor, backgroundColor],
       },
       {
-        onSettled: () => {
-          setIsLoading(false);
-        },
         onSuccess: async (data) => {
           await waitForTransactionReceipt(config, {
             hash: data,
           });
 
+          setTxHashWithTimeout(data);
+
           toast.success("Colors saved successfully");
+
+          setIsLoading(false);
         },
         onError: (error) => {
-          toast.error("Failed to save colors. See console for detailed error.");
+          toast.error(
+            (error as BaseError).details ||
+              "Failed to save colors. See console for detailed error."
+          );
 
           console.error(error);
+
+          setIsLoading(false);
         },
       }
     );
@@ -86,7 +97,7 @@ export const WidgetColors = ({
       </CardHeader>
       <CardContent className="flex flex-col gap-4">
         <div className="grid md:grid-cols-2 xl:grid-cols-4 gap-4">
-          <TestAlert colors={realtimeColors} />
+          <ExampleAlert colors={realtimeColors} />
           <ColorPicker
             initialColor={colors.primary}
             title="Primary Color"
@@ -106,14 +117,13 @@ export const WidgetColors = ({
             type="background"
           />
         </div>
-        <Button
+        <TxButton
+          isLoading={isLoading}
+          txHash={txHash}
+          icon={Save}
+          text="Save"
           onClick={handleSaveColors}
-          disabled={isLoading}
-          className="self-start flex items-center gap-2"
-        >
-          {isLoading ? <Loader2 className="animate-spin" /> : <Save />}
-          <span>Save</span>
-        </Button>
+        />
       </CardContent>
     </Card>
   );
