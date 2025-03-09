@@ -1,3 +1,5 @@
+import { EduStreamrAbi } from "@/abi/EduStreamr";
+import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -8,23 +10,20 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { TipFormData, formSchema } from "@/lib/definitions";
-import {
-  useAccount,
-  useWaitForTransactionReceipt,
-  useWriteContract,
-  BaseError,
-} from "wagmi";
-import toast from "react-hot-toast";
+import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
-import { EduStreamrAbi } from "@/abi/EduStreamr";
-import { parseEther } from "viem";
-import { useEffect } from "react";
-import { UniversalEduStreamrAbi } from "@/abi/UniversalEduStreamr";
+import { Textarea } from "@/components/ui/textarea";
 import { UniversalEduStreamrAddress } from "@/constants";
+import { TipFormData, formSchema } from "@/lib/definitions";
+import { config } from "@/wagmi";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { waitForTransactionReceipt } from "@wagmi/core";
+import { Loader2, Send } from "lucide-react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { formatEther, parseEther } from "viem";
+import { BaseError, useAccount, useBalance, useWriteContract } from "wagmi";
 
 export default function TipForm({
   creatorAddress,
@@ -47,50 +46,19 @@ export default function TipForm({
 
   const { isConnected, address: senderAddress } = useAccount();
 
-  const { writeContract, data: hash } = useWriteContract();
+  const balanceResult = useBalance({
+    address: senderAddress,
+    query: { enabled: !!senderAddress },
+  });
 
-  const { isSuccess: isConfirmed } = useWaitForTransactionReceipt({ hash });
+  const { writeContract } = useWriteContract();
 
-  useEffect(() => {
-    if (isConfirmed) {
-      toast.success("Tip sent successfully.");
-    }
-  }, [isConfirmed]);
+  const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = async (formData: TipFormData) => {
     try {
       if (!creatorAddress) {
         toast.error("Send tip failed. Recipient address not found.");
-        return;
-      }
-
-      if (isToAddress) {
-        writeContract(
-          {
-            abi: UniversalEduStreamrAbi,
-            address: UniversalEduStreamrAddress,
-            functionName: "sendTip",
-            args: [
-              creatorAddress,
-              formData.anonymous ? "Anonymous" : formData.name,
-              formData.message,
-            ],
-            value: parseEther(formData.amount.toString()),
-          },
-          {
-            onError: (err) => {
-              toast.error(
-                (err as BaseError).shortMessage || "Send tip failed."
-              );
-            },
-          }
-        );
-
-        return;
-      }
-
-      if (!contractAddress) {
-        toast.error("Send tip failed. Contract address not found.");
         return;
       }
 
@@ -104,6 +72,52 @@ export default function TipForm({
         return;
       }
 
+      if (isToAddress) {
+        setIsLoading(true);
+
+        writeContract(
+          {
+            abi: UniversalEduStreamrAbi,
+            address: UniversalEduStreamrAddress,
+            functionName: "sendTip",
+            args: [
+              creatorAddress,
+              formData.anonymous ? "Anonymous" : formData.name,
+              formData.message,
+            ],
+            value: parseEther(formData.amount.toString()),
+          },
+          {
+            onSuccess: async (data) => {
+              await waitForTransactionReceipt(config, { hash: data });
+
+              toast.success("Tip sent successfully.");
+
+              setIsLoading(false);
+            },
+            onError: (error) => {
+              toast.error(
+                (error as BaseError).details ||
+                  "Send tip failed. See console for detailed error."
+              );
+
+              console.error(error.message);
+
+              setIsLoading(false);
+            },
+          }
+        );
+
+        return;
+      }
+
+      if (!contractAddress) {
+        toast.error("Send tip failed. Contract address not found.");
+        return;
+      }
+
+      setIsLoading(true);
+
       writeContract(
         {
           abi: EduStreamrAbi,
@@ -116,8 +130,22 @@ export default function TipForm({
           value: parseEther(formData.amount.toString()),
         },
         {
-          onError: (err) => {
-            toast.error((err as BaseError).shortMessage || "Send tip failed.");
+          onSuccess: async (data) => {
+            await waitForTransactionReceipt(config, { hash: data });
+
+            toast.success("Tip sent successfully.");
+
+            setIsLoading(false);
+          },
+          onError: (error) => {
+            toast.error(
+              (error as BaseError).details ||
+                "Send tip failed. See console for detailed error."
+            );
+
+            console.error(error.message);
+
+            setIsLoading(false);
           },
         }
       );
@@ -138,8 +166,12 @@ export default function TipForm({
             name="name"
             render={({ field }) => (
               <FormItem>
+                <Label htmlFor="name" className="text-sm">
+                  Name
+                </Label>
                 <FormControl>
                   <Input
+                    id="name"
                     placeholder="Name"
                     autoComplete="off"
                     {...field}
@@ -176,11 +208,25 @@ export default function TipForm({
             name="amount"
             render={({ field }) => (
               <FormItem>
+                <div className="flex items-center justify-between">
+                  <Label htmlFor="amount" className="text-sm">
+                    Amount (EDU)
+                  </Label>
+                  {balanceResult.isSuccess && (
+                    <p className="text-xs text-gray-500">
+                      Balance:{" "}
+                      {Number(formatEther(balanceResult.data.value)).toFixed(5)}{" "}
+                      EDU
+                    </p>
+                  )}
+                </div>
                 <FormControl>
                   <Input
+                    id="amount"
                     placeholder="Amount"
                     type="number"
                     step="0.01"
+                    min={form.formState.defaultValues?.amount}
                     {...field}
                   />
                 </FormControl>
@@ -193,16 +239,34 @@ export default function TipForm({
             name="message"
             render={({ field }) => (
               <FormItem>
+                <Label htmlFor="message" className="text-sm">
+                  Message
+                </Label>
                 <FormControl>
-                  <Textarea placeholder="Message" maxLength={150} {...field} />
+                  <Textarea
+                    id="message"
+                    placeholder="Message"
+                    maxLength={250}
+                    {...field}
+                  />
                 </FormControl>
-                <FormMessage />
+                <div className="flex justify-between items-center w-full">
+                  <FormMessage />
+                  <p className="text-xs text-gray-500 ml-auto">
+                    {field.value.length} / 250
+                  </p>
+                </div>
               </FormItem>
             )}
           />
         </div>
-        <Button type="submit" className="mt-8">
-          Send Tip
+        <Button
+          type="submit"
+          className="mt-8 flex gap-2 items-center"
+          disabled={isLoading}
+        >
+          {isLoading ? <Loader2 className="animate-spin" /> : <Send />}
+          <span>Send Tip</span>
         </Button>
       </form>
     </Form>

@@ -8,7 +8,13 @@ import {
 import { client } from "@/client";
 
 export const UniversalEduStreamrAddress =
-  "0x87e841f7bd522ddaff1e2c09c0cff1c627060997";
+  "0x17140e742383371a5f06f4bfa346e551e91e4772";
+
+export const FaucetContractAddress =
+  "0x7bb20dc7faee1b154763156fb4d597ca4c0e01a5";
+
+export const EXPLORER_TX_BASE_URL =
+  "https://edu-chain-testnet.blockscout.com/tx";
 
 export const educhainTestnet = defineChain({
   id: 656476,
