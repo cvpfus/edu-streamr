@@ -4,11 +4,13 @@ import { usePathname } from "next/navigation";
 import {
   BellRing,
   FileText,
+  Icon,
   LayoutDashboard,
   MessageSquareText,
   ScrollText,
   Settings,
 } from "lucide-react";
+import { faucet } from "@lucide/lab";
 
 const NavItems = [
   {
@@ -30,6 +32,11 @@ const NavItems = [
     href: "/settings",
     label: "Settings",
     icon: <Settings className="size-4" />,
+  },
+  {
+    href: "/faucet",
+    label: "Faucet",
+    icon: <Icon iconNode={faucet} className="size-4" />,
   },
 ];
 
