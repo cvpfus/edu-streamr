@@ -87,7 +87,14 @@ contract UniversalEduStreamr is Ownable, IEduStreamr {
         string calldata senderName,
         string calldata message
     ) external payable {
+        require(!isRegistered[creatorAddress], "Creator is already registered. Please tip them through their username");
+
         require(msg.value > 0, "Tip amount must be greater than zero");
+
+        require(
+            bytes(message).length >= 1 && bytes(message).length <= 250,
+            "Message must be between 1 and 250 characters"
+        );
 
         (bool sent, ) = creatorAddress.call{value: msg.value}("");
         require(sent, "Failed to send tip");
@@ -112,6 +119,32 @@ contract UniversalEduStreamr is Ownable, IEduStreamr {
             message: tip.message,
             amount: tip.amount,
             timestamp: tip.timestamp
+        });
+    }
+
+    /// @dev Function to emit a tip event
+    /// @param creatorAddress - The address of the creator
+    /// @param senderName - The name of the sender
+    /// @param message - The message sent with the tip
+    /// @param amount - The amount of the tip
+    function emitTipEvent(
+        address creatorAddress,
+        string calldata senderName,
+        string calldata message,
+        uint256 amount
+    ) external {
+        require(
+            msg.sender == creatorAddress,
+            "Only creator can emit tip event"
+        );
+
+        emit TipReceived({
+            recipientAddress: creatorAddress,
+            senderAddress: creatorAddress,
+            senderName: senderName,
+            message: message,
+            amount: amount,
+            timestamp: block.timestamp
         });
     }
 
@@ -177,7 +210,10 @@ contract UniversalEduStreamr is Ownable, IEduStreamr {
             "Name must be between 3 and 35 characters"
         );
 
-        require(newName.isLetterOrSpace(), "Name must contain only letters and spaces");
+        require(
+            newName.isLetterOrSpace(),
+            "Name must contain only letters and spaces"
+        );
 
         CreatorInfo storage creatorInfo = creatorInfoByAddress[msg.sender];
 
