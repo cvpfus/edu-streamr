@@ -33,7 +33,7 @@ export default function Page() {
         <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
         <span>Live on EDU Chain Testnet</span>
       </div>
-      <header className="flex justify-between items-center p-4 border-b">
+      <header className="flex justify-between items-center p-4 border-b border-black">
         <img src="/logo.png" alt="EduStreamr" className="w-24" />
         <div className="flex gap-4">
           <Link
@@ -53,7 +53,7 @@ export default function Page() {
         </div>
       </header>
 
-      <main className="flex-1 flex flex-col gap-12 items-center px-8 mt-8">
+      <main className="flex flex-col gap-12 items-center px-8 my-7">
         <div className="flex flex-col gap-6 items-center justify-center text-center">
           <p className="text-cyan-600 font-bold">
             Web3 Monetization for Educators / Content Creators
@@ -71,14 +71,14 @@ export default function Page() {
               <Button size="lg">Launch App</Button>
             </Link>
             <Link href="https://docs.edustreamr.xyz" target="_blank">
-              <Button size="lg" variant="outline">
+              <Button size="lg" variant="neutral">
                 Learn More
               </Button>
             </Link>
           </div>
         </div>
 
-        <div className="bg-white w-full max-w-7xl rounded-xl">
+        <div className="bg-white w-full max-w-7xl rounded-xl border-2 border-r-4 border-b-4 border-black">
           <div className="w-full max-w-7xl flex gap-4 flex-col sm:flex-row items-center justify-around p-8 bg-gradient-to-br from-cyan-100/70 to-fuchsia-100/70 backdrop-blur-sm shadow-sm border border-gray-200 text-cyan-600 [&_p]:text-gray-600 rounded-xl text-center">
             <div>
               <h2 className="text-3xl font-bold">X</h2>
@@ -102,7 +102,7 @@ export default function Page() {
           <div className="flex flex-col md:flex-row gap-6">
             {opportunities.map((opportunity, index) => {
               return (
-                <Card key={index} className="flex gap-4">
+                <Card key={index} className="flex gap-4 bg-white">
                   <CardContent className="pt-6 flex flex-col gap-2">
                     {opportunity.icon}
                     <h3 className="text-xl font-bold text-cyan-600">
@@ -119,7 +119,7 @@ export default function Page() {
         </div>
       </main>
 
-      <footer className="border-t p-4 text-center text-sm text-gray-500">
+      <footer className="border-t border-black p-4 text-center text-sm text-gray-500">
         © {new Date().getFullYear()} EduStreamr. All rights reserved.
       </footer>
     </div>

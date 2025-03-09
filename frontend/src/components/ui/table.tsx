@@ -6,10 +6,13 @@ const Table = React.forwardRef<
   HTMLTableElement,
   React.HTMLAttributes<HTMLTableElement>
 >(({ className, ...props }, ref) => (
-  <div className="relative w-full overflow-auto">
+  <div className="relative w-full">
     <table
       ref={ref}
-      className={cn("w-full caption-bottom text-sm", className)}
+      className={cn(
+        "w-full caption-bottom border-border border-2 text-sm",
+        className,
+      )}
       {...props}
     />
   </div>
@@ -43,8 +46,8 @@ const TableFooter = React.forwardRef<
   <tfoot
     ref={ref}
     className={cn(
-      "border-t bg-muted/50 font-medium [&>tr]:last:border-b-0",
-      className
+      "border-t border-t-border bg-white font-base [&>tr]:last:border-b-0",
+      className,
     )}
     {...props}
   />
@@ -58,8 +61,8 @@ const TableRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      "border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
-      className
+      "border-b border-border text-mtext transition-colors bg-white font-base data-[state=selected]:bg-bw data-[state=selected]:text-mtext",
+      className,
     )}
     {...props}
   />
@@ -73,8 +76,8 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      "h-10 px-2 text-left align-middle font-medium text-muted-foreground [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-      className
+      "h-12 px-4 text-left align-middle font-heading text-mtext [&:has([role=checkbox])]:pr-0",
+      className,
     )}
     {...props}
   />
@@ -88,8 +91,8 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      "p-2 align-middle [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-      className
+      "p-4 align-middle font-base [&:has([role=checkbox])]:pr-0",
+      className,
     )}
     {...props}
   />
@@ -102,7 +105,7 @@ const TableCaption = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <caption
     ref={ref}
-    className={cn("mt-4 text-sm text-muted-foreground", className)}
+    className={cn("mt-4 text-sm text-mtext font-base", className)}
     {...props}
   />
 ))
