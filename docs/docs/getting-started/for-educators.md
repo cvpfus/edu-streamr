@@ -5,12 +5,21 @@ sidebar_position: 1
 ---
 
 ### Setting Up Your Account
-EduStreamr uses Thirdweb's in-app wallet feature, so you don't need an external wallet like MetaMask to use the platform. However, you can still use an external wallet if you prefer. Here's how you can set it up without an external wallet:
+#### Using Google or email
+EduStreamr uses Thirdweb's in-app wallet feature, so you don't need an external wallet like MetaMask to use the platform. Here's how you can set it up using Google or email:
 
 1. Visit [EduStreamr](https://edustreamr.xyz) and click on "Launch App"
 2. Click the "Connect" button at the top right, then select "Continue with Google" or enter your email address
 3. Complete the authentication process
 4. Your in-app wallet will be automatically created
+
+#### Using External Wallets
+If you prefer to use an external wallet like Metamask, you can connect it to EduStreamr by following these steps:
+
+1. Visit [EduStreamr](https://edustreamr.xyz) and click on "Launch App"
+2. Click the "Connect" button at the top right, then select "Connect a Wallet"
+3. Select your preferred wallet from the list of available options
+4. Your external wallet will be automatically connected
 
 ### Integrating with OBS
 Integrating with OBS is a simple process that allows you to display tips on-screen in real time. Here's how you can set it up:

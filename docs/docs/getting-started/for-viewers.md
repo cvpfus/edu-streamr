@@ -5,13 +5,21 @@ sidebar_position: 2
 ---
 
 ### Creating a Wallet
-
-EduStreamr uses Thirdweb's in-app wallet feature, so you don't need an external wallet like MetaMask to use the platform. However, you can still use an external wallet if you prefer. Here's how you can set it up without an external wallet:
+#### Using Google or email
+EduStreamr uses Thirdweb's in-app wallet feature, so you don't need an external wallet like MetaMask to use the platform. Here's how you can set it up using Google or email:
 
 1. Navigate to your favorite educator's tip page (usually shared by the educator during streams)
 2. Click the "Connect" button at the top right, then select "Continue with Google" or enter your email address
 3. Complete the authentication process
 4. Your in-app wallet will be automatically created
+
+#### Using External Wallets
+If you prefer to use an external wallet like Metamask, you can connect it to EduStreamr by following these steps:
+
+1. Navigate to your favorite educator's tip page (usually shared by the educator during streams)
+2. Click the "Connect" button at the top right, then select "Connect a Wallet"
+3. Select your preferred wallet from the list of available options
+4. Your external wallet will be automatically connected
 
 ### Funding Your Wallet
 To send tips to educators, you'll need to fund your wallet. Here's how you can do it:
