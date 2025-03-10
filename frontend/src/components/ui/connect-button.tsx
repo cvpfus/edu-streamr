@@ -9,7 +9,7 @@ import { useReconnect, useDisconnect } from "wagmi";
 const wallets = [
   inAppWallet({
     auth: {
-      options: ["google", "email", "passkey"],
+      options: ["google", "email"],
     },
   }),
   createWallet("io.metamask"),
