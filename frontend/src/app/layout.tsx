@@ -7,6 +7,7 @@ import { cookieToInitialState } from "wagmi";
 import { config as wagmiConfig } from "@/wagmi";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
+import Script from 'next/script'
 
 const font = Inter({ subsets: ["latin"], style: ["normal", "italic"] });
 
@@ -25,6 +26,7 @@ export default async function RootLayout(props: { children: ReactNode }) {
         <Toaster position="top-right" />
         <Providers initialState={initialState}>{props.children}</Providers>
       </body>
+      <Script src="https://scripts.simpleanalyticscdn.com/latest.js" />
     </html>
   );
 }
