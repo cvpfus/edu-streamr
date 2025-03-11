@@ -17,9 +17,10 @@ export const requestEdu = async ({
 
   if (!response.ok) {
     const errorData = await response.json();
-    throw new Error(
-      errorData.error || "Failed to request EDU. Please try again."
-    );
+
+    return {
+      error: errorData.error || "Failed to request EDU. Please try again.",
+    };
   }
 
   return response.json();
