@@ -1,9 +1,7 @@
 import { createConfig, webSocket } from "wagmi";
 import { inAppWalletConnector } from "@thirdweb-dev/wagmi-adapter";
-import { educhainTestnet } from "./constants";
 import { client } from "./client";
-
-export const networks = [educhainTestnet];
+import { educhainTestnet } from "./constants";
 
 export const config = createConfig({
   chains: [educhainTestnet],

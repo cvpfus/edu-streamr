@@ -27,7 +27,7 @@
     "@tanstack/react-table": "^8.21.2",
     "@thirdweb-dev/wagmi-adapter": "0.2.32",
     "@uiw/react-color": "^2.4.1",
-    "@wagmi/core": "^2.16.4",
+    "@wagmi/core": "2.16.5",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
@@ -41,8 +41,8 @@
     "tailwindcss-animate": "^1.0.7",
     "thirdweb": "5.92.1",
     "use-sound": "^4.0.3",
-    "viem": "2.22.17",
-    "wagmi": "^2.14.11",
+    "viem": "2.23.5",
+    "wagmi": "2.14.13",
     "zod": "^3.24.1"
   },
   "devDependencies": {
