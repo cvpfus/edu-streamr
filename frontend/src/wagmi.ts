@@ -18,7 +18,7 @@ export const config = createConfig({
   },
 });
 
-config.storage?.setItem("tw.lastChainId", educhainTestnet.id);
+config.storage?.setItem("thirdweb:lastChainId", educhainTestnet.id);
 
 declare module "wagmi" {
   interface Register {
