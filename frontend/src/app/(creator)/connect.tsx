@@ -7,16 +7,16 @@ export default function Connect({
 }: {
   children: React.ReactNode;
 }): React.ReactNode {
-  const { isConnected } = useAccount();
+  const { address } = useAccount();
 
   return (
     <>
-      {!isConnected && (
+      {!address && (
         <div className="flex h-full items-center justify-center">
           <span>Please connect your wallet.</span>
         </div>
       )}
-      {isConnected && children}
+      {address && children}
     </>
   );
 }
