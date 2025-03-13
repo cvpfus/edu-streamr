@@ -25,6 +25,8 @@ import toast from "react-hot-toast";
 import { formatEther, parseEther } from "viem";
 import { BaseError, useAccount, useBalance, useWriteContract } from "wagmi";
 
+const AMOUNTS = [5, 10, 25, 50];
+
 export default function TipForm({
   creatorAddress,
   contractAddress,
@@ -225,11 +227,28 @@ export default function TipForm({
                     id="amount"
                     placeholder="Amount"
                     type="number"
-                    step="0.01"
+                    step="0.0001"
                     min={form.formState.defaultValues?.amount}
                     {...field}
                   />
                 </FormControl>
+                <div className="flex gap-2 justify-between">
+                  {AMOUNTS.map((amount) => (
+                    <Button
+                      key={amount}
+                      className="w-full"
+                      variant={
+                        Number(form.watch("amount")) === amount
+                          ? "default"
+                          : "neutral"
+                      }
+                      onClick={() => form.setValue("amount", amount)}
+                      type="button"
+                    >
+                      {amount}
+                    </Button>
+                  ))}
+                </div>
                 <FormMessage />
               </FormItem>
             )}
