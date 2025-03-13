@@ -7,7 +7,7 @@ import { cookieToInitialState } from "wagmi";
 import { config as wagmiConfig } from "@/wagmi";
 import { Providers } from "./providers";
 import { Toaster } from "react-hot-toast";
-import Script from 'next/script'
+import Script from "next/script";
 
 const font = Inter({ subsets: ["latin"], style: ["normal", "italic"] });
 
