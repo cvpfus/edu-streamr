@@ -11,10 +11,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useAccount, useBalance, useWriteContract } from "wagmi";
 import CopyButton from "@/components/ui/copy-button";
-import {
-  useGetCreatorInfoByAddress,
-  useGetCreatorStats,
-} from "@/hooks/edu-streamr";
+import { useGetCreatorInfoByAddress } from "@/hooks/use-get-creator-info-by-address";
+import { useGetCreatorStats } from "@/hooks/use-get-creator-stats";
 import { formatEther } from "viem";
 import { Button } from "@/components/ui/button";
 import { EduStreamrAbi } from "@/abi/EduStreamr";

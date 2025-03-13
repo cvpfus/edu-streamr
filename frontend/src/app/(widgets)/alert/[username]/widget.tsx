@@ -1,7 +1,7 @@
 "use client";
 
 import { EduStreamrAbi } from "@/abi/EduStreamr";
-import { useGetCreatorInfoByUsername } from "@/hooks/edu-streamr";
+import { useGetCreatorInfoByUsername } from "@/hooks/use-get-creator-info-by-username";
 import { useEffect, useState } from "react";
 import { formatEther, isAddress, zeroAddress } from "viem";
 import { useClient, useWatchContractEvent } from "wagmi";

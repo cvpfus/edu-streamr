@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { useIsRegistered } from "@/hooks/use-is-registered";
 import { useAccount } from "wagmi";
-import { useGetCreatorInfoByAddress } from "@/hooks/edu-streamr";
+import { useGetCreatorInfoByAddress } from "@/hooks/use-get-creator-info-by-address";
 import { UniversalEduStreamrAddress } from "@/constants";
 import { HistoryTable } from "./history-table";
 

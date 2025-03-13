@@ -1,7 +1,7 @@
 "use client";
 
 import Loading from "@/components/ui/loading";
-import { useGetCreatorInfoByAddress } from "@/hooks/edu-streamr";
+import { useGetCreatorInfoByAddress } from "@/hooks/use-get-creator-info-by-address";
 import { useGetBio } from "@/hooks/use-get-bio";
 import { useAccount } from "wagmi";
 import Bio from "./_components/bio";

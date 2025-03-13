@@ -4,7 +4,7 @@ import { Loader2, Zap } from "lucide-react";
 import { type History } from "../columns";
 import { BaseError, useAccount, useWriteContract } from "wagmi";
 import { useIsRegistered } from "@/hooks/use-is-registered";
-import { useGetCreatorInfoByAddress } from "@/hooks/edu-streamr";
+import { useGetCreatorInfoByAddress } from "@/hooks/use-get-creator-info-by-address";
 import { EduStreamrAbi } from "@/abi/EduStreamr";
 import { parseEther } from "viem";
 import toast from "react-hot-toast";

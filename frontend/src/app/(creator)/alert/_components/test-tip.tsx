@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { useGetCreatorInfoByAddress } from "@/hooks/edu-streamr";
+import { useGetCreatorInfoByAddress } from "@/hooks/use-get-creator-info-by-address";
 import { useTxHash } from "@/hooks/use-tx-hash";
 import { config } from "@/wagmi";
 import { waitForTransactionReceipt } from "@wagmi/core";

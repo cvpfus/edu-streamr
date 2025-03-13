@@ -1,7 +1,7 @@
 "use client";
 
 import { useAccount } from "wagmi";
-import { useGetCreatorInfoByAddress } from "@/hooks/edu-streamr";
+import { useGetCreatorInfoByAddress } from "@/hooks/use-get-creator-info-by-address";
 import { AlertUrl } from "./_components/alert-url";
 import { Duration } from "./_components/duration";
 import { useGetDuration } from "@/hooks/use-get-duration";

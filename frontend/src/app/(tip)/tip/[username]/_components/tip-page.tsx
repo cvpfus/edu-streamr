@@ -1,9 +1,7 @@
 "use client";
 
-import {
-  useGetCreatorInfoByAddress,
-  useGetCreatorInfoByUsername,
-} from "@/hooks/edu-streamr";
+import { useGetCreatorInfoByAddress } from "@/hooks/use-get-creator-info-by-address";
+import { useGetCreatorInfoByUsername } from "@/hooks/use-get-creator-info-by-username";
 import TipForm from "./tip-form";
 import Image from "next/image";
 import { isAddress } from "viem";
