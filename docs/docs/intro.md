@@ -30,7 +30,7 @@ EduStreamr stands out from traditional monetization platforms with its:
 
 ### Practical Steps to Get Started
 
-1. **Sign Up**: Create your EduStreamr account in minutes
+1. **Sign Up**: [Create your EduStreamr](https://edustreamr.xyz/dashboard) account in minutes
 2. **Connect Your Stream**: Integrate with your existing streaming platform
 3. **Promote to Your Audience**: Let viewers know they can support you directly
 4. **Go Live**: Start receiving tips and answering questions in real-time
