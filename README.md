@@ -1,9 +1,11 @@
 # EduStreamr
 
-EduStreamr is revolutionizing live streaming by enabling streamers to receive cryptocurrency tips in real-time. Our platform allows viewers to support their favorite streamers using EDU. This enhances audience interaction while offering a decentralized, Web3-native solution to content monetization.
+EduStreamr revolutionizes how educators connect with their audience through Web3 technology. Our platform enables real-time cryptocurrency tipping during live streams, creating new opportunities for monetization and audience engagement.
 
-## Features
+EduStreamr stands out from traditional monetization platforms with its:
 
-- **Decentralized Live Q&A Sessions**: Streamers can set up live Q&A sessions with EduStreamr platform and get questions from their audience via tips.
-- **Seamless Integration for Streamers**: Streamers can easily integrate EduStreamr into their existing setup. The platform is designed to be simple for all content creators.
-- **Web3-first**: Built with Web3 principles, streamers own their payment channels. No middlemen, ensuring direct control over revenue generation.
+- **Web3-First Approach**: Built on blockchain technology, ensuring transparency and direct control
+- **Low Platform Fees**: Keep 95-99% of all tips you receive
+- **Instant Withdrawals**: Access your earnings immediately without waiting periods
+- **Simple Integration**: Easily incorporate into your existing streaming setup
+- **No External Wallet Required**: Uses Thirdweb's in-app wallet feature for a seamless experience

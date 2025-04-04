@@ -15,7 +15,7 @@ const opportunities = [
   {
     title: "Low Platform Fees",
     description:
-      "Streamers retain 95-98% of their earnings. EduStreamr is designed to be a low-fee tipping platform for streamers.",
+      "Streamers retain 95-99% of their earnings. EduStreamr is designed to be a low-fee tipping platform for streamers.",
     icon: <BadgePercent className="text-cyan-600 size-6" />,
   },
   {
