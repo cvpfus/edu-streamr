@@ -1,3 +1,5 @@
+New repository: https://github.com/EduStreamr/EduStreamr
+
 # EduStreamr
 
 EduStreamr revolutionizes how educators connect with their audience through Web3 technology. Our platform enables real-time cryptocurrency tipping during live streams, creating new opportunities for monetization and audience engagement.
